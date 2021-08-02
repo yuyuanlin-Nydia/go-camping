@@ -5,11 +5,40 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "watch": "vue-cli-service build --watch ",
+    "start": "nodemon app.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-free-regular": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@popperjs/core": "^2.9.2",
+    "@splidejs/vue-splide": "^0.3.5",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.0.1",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "express": "^4.17.1",
+    "firebase": "^8.7.1",
+    "firebase-admin": "^9.11.0",
+    "jquery": "^3.6.0",
+    "jsdom": "^16.6.0",
+    "node-sass": "^4.14.1",
+    "reset-css": "^5.0.1",
+    "sass-loader": "^10.1.1",
+    "uid": "^2.0.0",
+    "v-calendar": "^3.0.0-alpha.5",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.8",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

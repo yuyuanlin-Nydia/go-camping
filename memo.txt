@@ -1,0 +1,43 @@
+基於vue 動態載入圖片src的解決方法
+https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/218338/
+
+
+$nextTick
+
+
+https://stackoverflow.com/questions/51503633/click-and-edit-text-input-with-vue
+
+由於 JavaScript Date 時間戳是以毫秒為單位，而 Unix 時間戳是以秒為單位，所以我們可以將 Unix 時間戳乘以 1000 來轉換為 JavaScript 時間戳。如果 Unix 時間戳是 1607110465，那麼 JavaScript 時間戳就是 1607110465000。
+
+
+object.assign
+https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+
+
+內容少時可以沾黏在瀏覽器最底部，內容多時可以沾黏在內容的最底部固定在頁面的最下方的頁面
+https://www.tpisoftware.com/tpu/articleDetails/2041
+
+
+JavaScript中return返回多个值的三个方法
+https://blog.csdn.net/loongkingwhat/article/details/83350504
+
+firebase複合索引
+https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E6%95%99%E5%AE%A4/ios-firebase-%E6%9F%A5%E8%A9%A2%E6%A2%9D%E4%BB%B6-57fd49b56b1d
+
+使用firebase讀取資料的時候會發生這個狀況   取得資料比較久   會先跑出沒有資料  才顯示data
+https://drive.google.com/file/d/1l-szPQJSnz-1wF9kzUh5gIH5xDZwcW_l/view
+在vuex加入rvLoaded 並在取得資料的action中去使用commit更改mutation 設定的狀態 用這個state去控制元件的顯示與否
+
+
+第三方登入
+https://www.letswrite.tw/firebase-auth-google-fb/
+
+ngrok
+https://blog.techbridge.cc/2018/05/24/ngrok/
+
+https://stackoverflow.com/questions/51084089/vuejs-app-showing-invalid-host-header-error-loop
+
+把localhost從http變成https=>mkcert
+https://ithelp.ithome.com.tw/articles/10230052
+https://www.programmersought.com/article/93112686282/
+

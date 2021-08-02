@@ -1,0 +1,109 @@
+$color1: #e09150;
+$color2: #66ab8c;
+$color3: #f2f0ed;
+$color4: white;
+$color5: black;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+body {
+  border: 0;
+  font-family: "Noto Sans TC", "serif" !important;
+  box-sizing: border-box;
+  min-height: 100%;
+  position: relative;
+}
+/* 讓頁面在較少內容時,頁尾可以固定在底部 */
+/* main的padding-bottom值要等于或大于footer的height值 */
+.main {
+  padding-bottom: 100px;
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.parallax {
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+}
+img {
+  object-fit: cover;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  text-decoration: none !important;
+}
+.btn_brown1 {
+  color: $color1;
+  background-color: $color4;
+  padding: 7px 40px;
+  border: 1px solid $color1;
+  &:hover {
+    color: white;
+    background-color: $color1;
+  }
+}
+.btn_brown2 {
+  color: white;
+  background-color: $color1;
+  padding: 7px 40px;
+  border: 1px solid $color1;
+  &:hover {
+    color: $color1;
+    background-color: $color4;
+  }
+}
+.btn_green1 {
+  color: $color2;
+  background-color: $color4;
+  padding: 7px;
+  border: 1px solid $color2;
+  border-radius: 5px;
+  &:hover {
+    color: $color4;
+    background-color: $color2;
+  }
+}
+.btn_green2 {
+  color: $color4;
+  background-color: $color2;
+  padding: 7px;
+  border: 1px solid $color2;
+  border-radius: 5px;
+  &:hover {
+    color: $color2;
+    background-color: $color4;
+  }
+}
+
+input {
+  padding: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 80%;
+  outline: none;
+  box-sizing: border-box;
+}
+select {
+  padding: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  appearance: none;
+  // width: 80%;
+
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+
+}

@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Nav />
+  <router-view />
+
+  <MyFooter />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Nav from "./components/nav.vue";
+import MyFooter from "./components/footer.vue";
+import { mapMutations, mapState } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {};
+  },
   components: {
-    HelloWorld
-  }
-}
+    Nav,
+    MyFooter,
+  },
+  created() {
+    console.log(this.$store.state.logIn)
+  },
+  methods: {
+    ...mapMutations(["TOGGLE_NAV"]),
+   
+  },
+
+  computed: {
+    ...mapState(["navToggle"]),
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss">
+ </style>
