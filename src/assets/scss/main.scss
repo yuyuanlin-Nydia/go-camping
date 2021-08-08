@@ -107,3 +107,16 @@ select {
   outline: none;
 
 }
+
+.banner {
+  height: 200px;
+  background-image: url("https://placem.at/things?w=500");
+  display: flex;
+  align-items: flex-end;
+  h2 {
+    margin-left: 50px;
+    margin-bottom: 20px;
+    color: white;
+    font-weight: 900;
+  }
+}

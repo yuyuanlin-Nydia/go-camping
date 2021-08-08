@@ -27,7 +27,7 @@
         </router-link>
       </li>
       <li @click="toggle_nav">
-        <router-link :to="{ name: 'Tent' }"><span>帳篷預定</span></router-link>
+        <router-link :to="{ name: 'Tent' }"><span>帳篷資訊</span></router-link>
       </li>
       <li @click="toggle_nav">
         <router-link :to="{ name: 'Restaurant' }"

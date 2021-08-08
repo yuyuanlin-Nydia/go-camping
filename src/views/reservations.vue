@@ -1,6 +1,4 @@
 <template>
-  {{ filteredData[0] }}
-  
   <div class="myContainer main" v-if="rvLoaded">
     <!-- 搜尋列 -->
     <div class="search_bar">

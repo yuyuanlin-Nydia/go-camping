@@ -41,3 +41,18 @@ https://stackoverflow.com/questions/51084089/vuejs-app-showing-invalid-host-head
 https://ithelp.ithome.com.tw/articles/10230052
 https://www.programmersought.com/article/93112686282/
 
+指令建立repo
+https://noob.tw/gh-cli/
+先有本機資夾再建立-github-prop-鏈結
+https://eason920.medium.com/%E5%85%88%E6%9C%89%E6%9C%AC%E6%A9%9F%E8%B3%87%E5%A4%BE%E5%86%8D%E5%BB%BA%E7%AB%8B-github-prop-%E9%8F%88%E7%B5%90-66038b9092d4
+
+區分管理者和一般會員
+https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
+
+
+網頁模板設計參考:
+首頁:
+住房專案(煙波大飯店):https://tainan.lakeshore.com.tw/latest-news/room-offers/
+帳篷總覽(文華東方):https://www.mandarinoriental.com.hk/reservations/rooms?adults=2&rooms=1&arrive=2021-08-20&depart=2021-08-28&hotel=59555&language=zh-TW&rates=true
+個別帳棚介紹(亞緻大飯店):http://taipei.landishotelsresorts.com/chinese-trad/accommodation-detail.php?id=1
+訂房搜尋欄(Airbnb):https://www.airbnb.com.tw/

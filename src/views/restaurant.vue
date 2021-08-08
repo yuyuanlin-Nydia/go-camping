@@ -1,7 +1,9 @@
 <template>
   <RvModule v-if="isBooking" @update="selfUpdate" />
-
-  <div class="main">
+  <div class="banner">
+    <h2>餐廳資訊</h2>
+  </div>
+  <div class="myContainer main">
     <div class="restaurant_div">
       <button class="btn_green1" @click="rvBooking">線上訂位</button>
       <button class="btn_green1">預約外帶</button>
@@ -209,11 +211,13 @@ export default {
   .menu {
     h2 {
       margin: 50px 0 20px 0;
+      font-weight: 700;
     }
   }
   .dinning_env {
     h2 {
       margin: 50px 0 20px 0;
+      font-weight: 700;
     }
 
     .evimg_div {

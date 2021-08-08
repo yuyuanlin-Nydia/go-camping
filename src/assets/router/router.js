@@ -4,6 +4,7 @@ import Home from "../../views/home.vue";
 import About from "../../views/about.vue";
 import Restaurant from "../../views/restaurant.vue";
 import Tent from "../../views/tent.vue";
+import TentIntro from "../../views/tentIntro.vue";
 import Attraction from "../../views/attraction.vue";
 import Contactus from "../../views/contactus.vue";
 import Reservations from "../../views/reservations.vue";
@@ -35,6 +36,11 @@ const router = createRouter({
       path: "/tent",
       name: "Tent",
       component: Tent,
+    },
+    {
+      path: "/tent-intro/:tentId",
+      name: "TentIntro",
+      component: TentIntro,
     },
     {
       path: "/about",
