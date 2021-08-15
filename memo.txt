@@ -56,3 +56,4 @@ https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 帳篷總覽(文華東方):https://www.mandarinoriental.com.hk/reservations/rooms?adults=2&rooms=1&arrive=2021-08-20&depart=2021-08-28&hotel=59555&language=zh-TW&rates=true
 個別帳棚介紹(亞緻大飯店):http://taipei.landishotelsresorts.com/chinese-trad/accommodation-detail.php?id=1
 訂房搜尋欄(Airbnb):https://www.airbnb.com.tw/
+訂房畫面(萬豪飯店):https://www.marriott.com.cn/reservation/rateListMenu.mi?defaultTab=standard

@@ -1,8 +1,8 @@
 <template>
   <RvModule v-if="isBooking" @update="selfUpdate" />
-  <div class="banner">
-    <h2>餐廳資訊</h2>
-  </div>
+  <BannerTop >
+    <template v-slot:title>餐廳資訊</template>
+  </BannerTop>
   <div class="myContainer main">
     <div class="restaurant_div">
       <button class="btn_green1" @click="rvBooking">線上訂位</button>
@@ -99,6 +99,7 @@ import "bootstrap";
 import RvModule from "../components/rvModule.vue";
 import LightBox from "../components/lightBox.vue";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
+import BannerTop from '../components/bannerTop.vue';
 
 export default {
   name: "",
@@ -107,6 +108,7 @@ export default {
     LightBox,
     Splide,
     SplideSlide,
+    BannerTop,
   },
   props: {},
   data() {

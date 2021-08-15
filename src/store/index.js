@@ -9,7 +9,8 @@ export default createStore({
     logIn: null,
     user: [],
     tentData: [],
-    currentTent:[]
+    currentTent: [],
+    occupancy: [],
   },
   mutations: {
     TOGGLE_NAV(state) {
@@ -27,14 +28,19 @@ export default createStore({
     },
     SET_TENTDATA(state, payload) {
       state.tentData.push(payload);
+      console.log(state.tentData);
     },
-    SET_CURRENT_TENT(state,payload){
-      state.currentTent=state.tentData.filter(tent=>{
-        return tent.id===payload
-      })
-    }
+    SET_CURRENT_TENT(state, payload) {
+      state.currentTent = state.tentData.filter((tent) => {
+        return tent.id === payload;
+      });
+    },
+    searchTent(state, payload) {
+      state.occupancy.push(payload);
+    },
   },
   actions: {
+    //所有訂位
     async GET_RVDATA({ commit }) {
       const getData = db
         .collection("reservation")
@@ -57,18 +63,42 @@ export default createStore({
       });
       commit("RV_LOADED");
     },
+    //所有帳篷
     async GET_TENTDATA({ commit }) {
       var getData = db.collection("tent");
       var results = await getData.get();
+
       results.forEach((doc) => {
         const data = {
           id: doc.id,
           tentName: doc.data().tentName,
           description: doc.data().description,
           facility: doc.data().facility,
-          offers:doc.data().offers
+          offers: doc.data().offers,
         };
         commit("SET_TENTDATA", data);
+      });
+
+      commit("RV_LOADED");
+    },
+    //  GET_TENTBOOKING({commit}){
+    //   const getData=db.collection('tents').where('price','<=',8000)
+    //   const data=await getData.get();
+    // }
+    // 搜尋特定帳篷
+    async SEARCH_TENT(context, args) {
+      var a = args.toString().split(",");
+      var getData = db.collection("tent").where("tentName", "in", a);
+      var result = await getData.get();
+      result.forEach((doc) => {
+        const data = {
+          id: doc.id,
+          tentName: doc.data().tentName,
+          description: doc.data().description,
+          facility: doc.data().facility,
+          offers: doc.data().offers,
+        };
+        context.commit("searchTent", data);
       });
     },
   },

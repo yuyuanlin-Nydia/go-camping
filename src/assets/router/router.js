@@ -9,6 +9,7 @@ import Attraction from "../../views/attraction.vue";
 import Contactus from "../../views/contactus.vue";
 import Reservations from "../../views/reservations.vue";
 import SignIn from "../../views/signIn.vue";
+import TentBooking from "../../views/tentBooking.vue";
 
 const routerHistory = createWebHistory();
 
@@ -41,6 +42,11 @@ const router = createRouter({
       path: "/tent-intro/:tentId",
       name: "TentIntro",
       component: TentIntro,
+    },
+    {
+      path: "/tent-booking",
+      name: "TentBooking",
+      component: TentBooking,
     },
     {
       path: "/about",

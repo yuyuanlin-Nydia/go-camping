@@ -86,7 +86,7 @@ a:hover {
   }
 }
 
-input {
+input[type=text] {
   padding: 5px;
   border: 1px solid lightgrey;
   border-radius: 5px;
@@ -108,15 +108,3 @@ select {
 
 }
 
-.banner {
-  height: 200px;
-  background-image: url("https://placem.at/things?w=500");
-  display: flex;
-  align-items: flex-end;
-  h2 {
-    margin-left: 50px;
-    margin-bottom: 20px;
-    color: white;
-    font-weight: 900;
-  }
-}

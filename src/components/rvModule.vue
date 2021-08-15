@@ -1,60 +1,66 @@
 <template>
   <div class="bg" @click.self="closeModule">
     <div class="wrapper">
-      <div class="module_top">線上訂位</div>
-      <form>
-        <div>
-          <label for="">姓名:</label>
-          <input
-            type="text"
-            placeholder="請輸入姓名 ex.王小名、張先生"
-            v-model="name"
-          />
-        </div>
-        <div>
-          <label for="">電話:</label>
-          <input type="text" placeholder="請輸入手機號碼" v-model="phoneNo" />
-        </div>
-        <div>
-          <label for="">大人人數:</label><input type="text" v-model="adultNo" />
-        </div>
+      <div class="module_top"><slot name="module_top">線上訂位</slot></div>
+      <slot name="module_center">
+        <form>
+          <div>
+            <label for="">姓名:</label>
+            <input
+              type="text"
+              placeholder="請輸入姓名 ex.王小名、張先生"
+              v-model="name"
+            />
+          </div>
+          <div>
+            <label for="">電話:</label>
+            <input type="text" placeholder="請輸入手機號碼" v-model="phoneNo" />
+          </div>
+          <div>
+            <label for="">大人人數:</label
+            ><input type="text" v-model="adultNo" />
+          </div>
 
-        <div>
-          <label for="">小孩人數:</label><input type="text" v-model="childNo" />
-        </div>
+          <div>
+            <label for="">小孩人數:</label
+            ><input type="text" v-model="childNo" />
+          </div>
 
-        <div>
-          <label for="">日期:</label>
-          <v-date-picker
-            mode="date"
-            :min-date="new Date().setDate(new Date().getDate() + 1)"
-            :max-date="new Date().setDate(new Date().getDate() + 30)"
-            v-model="date"
-          />
-          <!-- <select name="date" id="" v-model="date">
-            <option value="2021/07/13">2021/07/13</option>
-            <option value="2021/07/14">2021/07/14</option>
-            <option value="2021/07/15">2021/07/15</option>
-          </select> -->
-        </div>
+          <div>
+            <label for="">日期:</label>
+            <v-date-picker
+              mode="date"
+              :min-date="new Date().setDate(new Date().getDate() + 1)"
+              :max-date="new Date().setDate(new Date().getDate() + 30)"
+              v-model="date"
+            />
+            <!-- <select name="date" id="" v-model="date">
+              <option value="2021/07/13">2021/07/13</option>
+              <option value="2021/07/14">2021/07/14</option>
+              <option value="2021/07/15">2021/07/15</option>
+            </select> -->
+          </div>
 
-        <div>
-          <label for="">時間:</label>
-          <select name="time" id="" v-model="time">
-            <option value="1100">11:00</option>
-            <option value="1130">11:30</option>
-            <option value="1200">12:00</option>
-            <option value="1230">12:30</option>
-            <option value="1300">13:00</option>
-            <option value="1330">13:30</option>
-            <option value="1400">14:00</option>
-            <option value="1430">14:30</option>
-          </select>
-        </div>
-      </form>
+          <div>
+            <label for="">時間:</label>
+            <select name="time" id="" v-model="time">
+              <option value="1100">11:00</option>
+              <option value="1130">11:30</option>
+              <option value="1200">12:00</option>
+              <option value="1230">12:30</option>
+              <option value="1300">13:00</option>
+              <option value="1330">13:30</option>
+              <option value="1400">14:00</option>
+              <option value="1430">14:30</option>
+            </select>
+          </div>
+        </form>
+      </slot>
       <div class="buttons">
-        <button class="btn_brown2" @click="uploadReservation">確認</button>
-        <button class="btn_brown2" @click="closeModule">取消</button>
+        <slot name="module_bottom">
+          <button class="btn_brown2" @click="uploadReservation">確認</button>
+          <button class="btn_brown2" @click="closeModule">取消</button>
+        </slot>
       </div>
     </div>
   </div>
@@ -72,7 +78,7 @@ export default {
     return {
       name: null,
       phoneNo: null,
-      date:new Date(),
+      date: new Date(),
       time: null,
       adultNo: null,
       childNo: null,
@@ -86,7 +92,7 @@ export default {
       const database = db.collection("reservation").doc();
 
       await database.set({
-        rvId:uid(6),
+        rvId: uid(6),
         name: this.name,
         phoneNo: this.phoneNo,
         adultNo: this.adultNo,
@@ -94,7 +100,7 @@ export default {
         date: this.date,
         time: this.time,
         madeRvTime: new Date().getTime(),
-        status:"booked"
+        status: "booked",
       });
       this.isLoading = false;
       alert("您已成功預約訂位!");

@@ -1,6 +1,6 @@
 <template>
   <div class="mycontainer main" v-if="tent">
-      <div class="content">
+    <div class="content">
       <h2>{{ tent.tentName }}</h2>
       <div class="back_rec">
         <p class="tent_desc">{{ tent.description }}</p>
@@ -35,8 +35,10 @@
               <h5>{{ item.offerName }}</h5>
               <h5>TWD {{ item.lowestPrice.toLocaleString("en-US") }}起</h5>
               <div class="buttons">
-                <button class="btn_brown1">查看更多</button>
-                <button class="btn_brown1">立即訂房</button>
+                <button class="btn_brown1" @click="getOfferDeatails(idx)">
+                  查看更多
+                </button>
+               <router-link :to="{name:'TentBooking'}" > <button class="btn_brown1">立即訂房</button></router-link>
               </div>
             </div>
           </div>
@@ -44,16 +46,43 @@
       </div>
     </div>
   </div>
+  <RvModule v-if="openModule" @update="selfUpdate">
+    <template v-slot:module_top>{{ offer.offerName }}</template>
+
+    <template v-slot:module_center>
+      <div style="padding: 20px 30px">
+        <div style="font-weight: 900; text-align: left">【專案內容】</div>
+        <ul>
+          <li v-for="(item, idx) in offer.content" :key="idx">
+            {{ item }}
+          </li>
+          <li>免費無線網際網路 免費無線網際網路</li>
+          <li>免費提供地下停車場(限高兩米)</li>
+          <li>入住時間下午3點，退房時間上午11點</li>
+        </ul>
+        <div style="font-weight: 900; text-align: left">【注意事項】</div>
+        <ul>
+          <li>本專案團體及旅行社不適用</li>
+          <li>本專案須預先訂房，且不得與其他優惠專案併用</li>
+        </ul>
+      </div>
+    </template>
+    <template v-slot:module_bottom>
+      <router-link :to="{name:'TentBooking'}"><button class="btn_brown2">立即預定</button></router-link>
+    </template>
+  </RvModule>
 </template>
 
 <script>
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import { mapActions, mapMutations, mapState } from "vuex";
+import RvModule from "../components/rvModule.vue";
 
 export default {
   components: {
     Splide,
     SplideSlide,
+    RvModule,
   },
   data() {
     return {
@@ -64,6 +93,8 @@ export default {
         gap: "1rem",
       },
       tent: null,
+      openModule: null,
+      offer: null,
     };
   },
   async mounted() {
@@ -72,10 +103,17 @@ export default {
   methods: {
     ...mapMutations(["SET_CURRENT_TENT"]),
     ...mapActions(["GET_TENTDATA"]),
-    getCurrentTent() {
-      this.GET_TENTDATA();
+   async getCurrentTent() {
+     await this.GET_TENTDATA();
       this.SET_CURRENT_TENT(this.$route.params.tentId);
       this.tent = this.currentTent[0];
+    },
+    selfUpdate(val) {
+      this.openModule = val;
+    },
+    getOfferDeatails(val) {
+      this.openModule = true;
+      this.offer = this.currentTent[0].offers[val];
     },
   },
   computed: {
@@ -121,12 +159,12 @@ export default {
   .section {
     margin-top: 50px;
   }
-  .facility_sec{
+  .facility_sec {
     background-color: lightgray;
     width: 500px;
     margin: 0 auto;
     padding: 30px;
-    li{
+    li {
       font-size: 20px;
       font-weight: 500;
     }

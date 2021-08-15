@@ -1,15 +1,19 @@
 <template>
-  <div class="right_nav">
+  <div class="top_nav">
     <div v-if="logIn" class="member_info">
-      <h5 class="member_accout">{{user[0].userName}}您好</h5>
+      <h5 class="member_accout">{{ user[0].userName }}您好</h5>
       <ul class="member_menu">
         <li>會員主頁</li>
         <li @click="logOut">登出</li>
       </ul>
     </div>
     <div v-else class="log_btn">
-      <router-link :to="{ name: 'SignIn' }">登入|註冊</router-link>
+      <router-link :to="{ name: 'SignIn' }"><span>登入|註冊</span></router-link>
+      <router-link :to="{}"><span>購物車</span></router-link>
     </div>
+   
+  </div>
+  <div class="right_nav">
     <div @click="toggle_nav" class="bar_icon">
       <img src="@/assets/icon/bars-solid.svg" alt="" />
     </div>
@@ -59,7 +63,7 @@ export default {
     return { data: {} };
   },
   methods: {
-    ...mapMutations(["TOGGLE_NAV","SET_LOGIN"]),
+    ...mapMutations(["TOGGLE_NAV", "SET_LOGIN"]),
     toggle_nav() {
       this.TOGGLE_NAV();
     },
@@ -70,15 +74,15 @@ export default {
         .then(() => {
           // 登出成功
           this.SET_LOGIN();
-          this.$router.push({name:"Home"})
+          this.$router.push({ name: "Home" });
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
         });
     },
   },
   computed: {
-    ...mapState(["navToggle", "logIn","user"]),
+    ...mapState(["navToggle", "logIn", "user"]),
   },
 };
 </script>
@@ -135,20 +139,7 @@ export default {
       }
     }
   }
-  .log_btn {
-    font-size: 20px;
-    font-weight: 500;
-    background-color: #fff;
-    padding: 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    a {
-      &:hover {
-        color: #000;
-        text-decoration: underline !important;
-      }
-    }
-  }
+ 
   .bar_icon {
     background-color: #fff;
     display: flex;
@@ -160,6 +151,27 @@ export default {
     img {
       width: 28px;
       height: 28px;
+    }
+  }
+}
+.top_nav{
+   .log_btn {
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    right: 200px;
+    span{
+      padding:3px 10px;
+      background-color: $color2;
+      color: white;
+      
+    }
+    a {
+      &:hover {
+        color: white;
+        text-decoration: underline !important;
+      }
     }
   }
 }
