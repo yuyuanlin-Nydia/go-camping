@@ -1,9 +1,9 @@
 // 為了使用ngrok
 module.exports = {
-    devServer: {
-        disableHostCheck: true,
-    }
-}
+  devServer: {
+    disableHostCheck: true,
+  },
+};
 // 為了使用mkcert
 // const fs = require("fs");
 // module.exports = {

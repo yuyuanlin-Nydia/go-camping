@@ -11,6 +11,7 @@ export default createStore({
     tentData: [],
     currentTent: [],
     occupancy: [],
+    occupancy_s:[]
   },
   mutations: {
     TOGGLE_NAV(state) {
@@ -28,15 +29,18 @@ export default createStore({
     },
     SET_TENTDATA(state, payload) {
       state.tentData.push(payload);
-      console.log(state.tentData);
     },
     SET_CURRENT_TENT(state, payload) {
       state.currentTent = state.tentData.filter((tent) => {
         return tent.id === payload;
       });
     },
+    searchTentType(state, payload) {
+      state.occupancy_s.push(payload);
+    },
     searchTent(state, payload) {
       state.occupancy.push(payload);
+     
     },
   },
   actions: {
@@ -67,7 +71,6 @@ export default createStore({
     async GET_TENTDATA({ commit }) {
       var getData = db.collection("tent");
       var results = await getData.get();
-
       results.forEach((doc) => {
         const data = {
           id: doc.id,
@@ -81,25 +84,74 @@ export default createStore({
 
       commit("RV_LOADED");
     },
-    //  GET_TENTBOOKING({commit}){
-    //   const getData=db.collection('tents').where('price','<=',8000)
-    //   const data=await getData.get();
-    // }
-    // 搜尋特定帳篷
-    async SEARCH_TENT(context, args) {
-      var a = args.toString().split(",");
+    // 搜尋特定帳篷=>專案資訊
+    async SEARCH_TENT({commit},args) {
+      var a = args.tentType.toString().split(","); //帳篷名陣列
       var getData = db.collection("tent").where("tentName", "in", a);
       var result = await getData.get();
-      result.forEach((doc) => {
-        const data = {
+      var data;
+      var data_arr=[]
+      result.forEach((doc) => { 
+        data = {
           id: doc.id,
           tentName: doc.data().tentName,
           description: doc.data().description,
           facility: doc.data().facility,
           offers: doc.data().offers,
+          tentNo: doc.data().tentNo,
         };
-        context.commit("searchTent", data);
+        data_arr.push(data)
       });
+      commit("searchTentType", data);
+      return data_arr;
+    },
+    async SEARCH_REST_TENT({ dispatch, commit }, args) {
+      var a = args.tentType.toString().split(","); //帳篷名陣列
+      var received = await dispatch("SEARCH_TENT",args); // 等待 SEARCH_TENT 完成
+      console.log(args)
+      // 統計日期內的總預訂房間數
+      let start = args.stayFrom
+      let end = args.stayTo
+      var getData2 = db
+        .collectionGroup("tentBooking")
+        .where("tentName", "in", a)
+        .where("stayDate", ">=", start)
+        .where("stayDate", "<", end);
+      var result2 = await getData2.get();
+      let cal = [];
+      var details;
+      result2.forEach((doc) => {
+        details = {
+          tentName: doc.data().tentName,
+          bookNum: doc.data().bookNum,
+        };
+        cal.push(details);
+      });
+      var temp = {};
+      //統計相同帳篷的數量
+      if(cal){
+        for (var i = 0; i < cal.length; i++) {
+          var key = cal[i].tentName;
+          if (temp[key]) {
+            temp[key].bookNum += cal[i].bookNum;
+          } else {
+            temp[key] = {};
+            temp[key].tentName = cal[i].tentName;
+            temp[key].bookNum = cal[i].bookNum;
+          }
+        }
+      }
+      //計算剩餘的帳篷數量
+      received.forEach(function(item){
+        if(temp.length){
+          item.rest=item.tentNo-temp[item.tentName].bookNum;
+        }else{
+          item.rest=item.tentNo
+        }
+        //傳給mutations
+        console.log(item)
+        commit("searchTent", item);
+      })
     },
   },
   modules: {},

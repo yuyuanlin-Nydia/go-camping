@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Home from "../../views/home.vue";
-import About from "../../views/about.vue";
 import Restaurant from "../../views/restaurant.vue";
 import Tent from "../../views/tent.vue";
 import TentIntro from "../../views/tentIntro.vue";
@@ -47,11 +46,6 @@ const router = createRouter({
       path: "/tent-booking",
       name: "TentBooking",
       component: TentBooking,
-    },
-    {
-      path: "/about",
-      name: "About",
-      component: About,
     },
     {
       path: "/attraction",

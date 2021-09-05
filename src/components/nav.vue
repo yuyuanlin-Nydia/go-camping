@@ -26,11 +26,6 @@
         /></router-link>
       </li>
       <li @click="toggle_nav">
-        <router-link :to="{ name: 'About' }"
-          ><span>關於我們</span>
-        </router-link>
-      </li>
-      <li @click="toggle_nav">
         <router-link :to="{ name: 'Tent' }"><span>帳篷資訊</span></router-link>
       </li>
       <li @click="toggle_nav">

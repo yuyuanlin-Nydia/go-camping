@@ -49,6 +49,8 @@ https://eason920.medium.com/%E5%85%88%E6%9C%89%E6%9C%AC%E6%A9%9F%E8%B3%87%E5%A4%
 區分管理者和一般會員
 https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 
+信件寄信:https://www.smtpjs.com/
+在index.html檔加入script CDN，在頁面使用記得用Email.send前面加上window.
 
 網頁模板設計參考:
 首頁:
@@ -57,3 +59,4 @@ https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 個別帳棚介紹(亞緻大飯店):http://taipei.landishotelsresorts.com/chinese-trad/accommodation-detail.php?id=1
 訂房搜尋欄(Airbnb):https://www.airbnb.com.tw/
 訂房畫面(萬豪飯店):https://www.marriott.com.cn/reservation/rateListMenu.mi?defaultTab=standard
+周邊景點畫面(台北亞都麗緻大飯店):http://taipei.landishotelsresorts.com/chinese-trad/travel-sightseeing.php

@@ -1,9 +1,10 @@
 <template>
   <div v-if="tentData.length">
-    <div class="selection" >
-      {{startDate}}
-      <div>
-        <p>客房<br /></p>
+    <div class="selection">
+      <div @click="showOptions" style="flex-direction:column;justify-content:center;align-items:start">
+        <p>客房</p>
+        
+        <p v-if="checkedItem.length">{{checkedItem.toString()}}</p>
       </div>
       <div>
         <v-date-picker
@@ -38,8 +39,14 @@
           </template>
         </v-date-picker>
       </div>
+      <!-- 搜尋的選擇 -->
+
       <div>
-        <v-date-picker class="inline-block h-full" v-model="endDate">
+        <v-date-picker
+          class="inline-block h-full"
+          v-model="endDate"
+          :min-date="new Date().setDate(new Date(startDate).getDate() + 1)"
+        >
           <template v-slot="{ inputValue, togglePopover }">
             <div class="flex items-center">
               <p @click="togglePopover()">
@@ -67,13 +74,14 @@
           </template>
         </v-date-picker>
       </div>
-      <div>
+      <!-- <div>
         <p>入住<br /><span class="sub_title">新增人數</span></p>
-      </div>
+      </div> -->
       <button class="btn_brown1 search_btn" @click="searchTent">搜尋</button>
     </div>
-    <!-- <div class="filter_content">
-      <div class="tent_choice">
+   
+    <div class="filter_content">
+      <div class="tent_choice" v-if="optionsShow">
         <label for="tentsAll"
           ><input
             type="checkbox"
@@ -83,22 +91,25 @@
             @change="changeAllChecked()"
           />全部</label
         >
-        <label v-for="(item,idx) in tentData" :key="idx" :for="idx"
+        <label v-for="(item, idx) in tentData" :key="idx" :for="idx"
           ><input
             type="checkbox"
             :id="idx"
             :value="item.tentName"
             v-model="checkedItem"
-          />{{item.tentName}}</label
+          />{{ item.tentName }}</label
         ><br />
       </div>
-      <div class="people">
+      <!-- <div class="people">
         <div>
           <p>成人</p>
           <div>
             <span @click="plus()">{{ adult }}位成人</span>
             <div style="display: flex">
-              <div @click="adult--" :class="[adult <= 0 ? 'active' : 'canMath']">
+              <div
+                @click="adult--"
+                :class="[adult <= 0 ? 'active' : 'canMath']"
+              >
                 <i class="fas fa-minus-circle"></i>
               </div>
               <div
@@ -115,7 +126,10 @@
           <div>
             <span>{{ child }}位兒童</span>
             <div style="display: flex">
-              <div @click="child--" :class="[child <= 0 ? 'active' : 'canMath']">
+              <div
+                @click="child--"
+                :class="[child <= 0 ? 'active' : 'canMath']"
+              >
                 <i class="fas fa-minus-circle"></i>
               </div>
               <div
@@ -127,13 +141,19 @@
             </div>
           </div>
         </div>
-      </div>
-    </div> -->
+      </div> -->
+    </div>
+     <div class="filtered_text" v-if="occupancy.length">
+      <span class="question">您選擇的帳篷</span>:<span class="answer">{{ checkedItem.toString() }} </span><br>
+      <span class="question">選擇入住日期</span>:<span class="answer">{{startDate.toLocaleDateString()}}</span><br>
+      <span class="question">選擇退房日期</span>:<span class="answer">{{ endDate.toLocaleDateString() }} </span><br>
+      <span class="question">搜尋結果</span>:<span class="answer">共 {{ occupancy.length }}項</span> 
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState,mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "RoomFilter",
   data() {
@@ -145,13 +165,14 @@ export default {
       checkedAll: false,
       checkedItem: [],
       checkedAttr: ["樹屋兩人帳", "豪華四人帳"],
+      optionsShow: null,
     };
   },
   async mounted() {
     await this.GET_TENTDATA();
   },
   methods: {
-    ...mapActions(["GET_TENTDATA","SEARCH_TENT"]),
+    ...mapActions(["GET_TENTDATA", "SEARCH_TENT"]),
     changeAllChecked() {
       if (this.checkedAll) {
         this.checkedItem = this.checkedAttr;
@@ -160,16 +181,20 @@ export default {
       }
     },
     searchTent() {
-      // var data={
-      //   "tentType":this.checkedItem,
-      //   "stayFrom":20210915,
-      //   "stayTo":20210718
-      // }
-      this.$store.dispatch("SEARCH_TENT", this.checkedItem);
+      var data = {
+        tentType: this.checkedItem,
+        stayFrom: parseInt(this.startDate.getTime() / 1000),
+        stayTo: parseInt(this.startDate.getTime() / 1000),
+      };
+      this.$store.dispatch("SEARCH_REST_TENT", data);
+      this.optionsShow = false;
+    },
+    showOptions() {
+      this.optionsShow = !this.optionsShow;
     },
   },
   computed: {
-    ...mapState(["tentsName","tentData","occupancy"]),
+    ...mapState(["tentsName", "tentData", "occupancy"]),
   },
 
   watch: {
@@ -219,6 +244,13 @@ export default {
     background-color: $color1;
     color: white;
   }
+}
+.filtered_text{
+  padding: 10px 15%;
+  .answer{
+    font-weight: bold;
+  }
+  
 }
 .filter_content {
   display: flex;
