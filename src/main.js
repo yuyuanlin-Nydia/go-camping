@@ -5,8 +5,6 @@ import store from "./store";
 import router from "./assets/router/router.js";
 import VCalendar from "v-calendar";
 import { firebaseAuth } from "./firebase/firebaseInit";
-// import { useRouter } from 'vue-router' // import router
-
 
 import "@/assets/scss/main.scss";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -32,12 +30,29 @@ firebaseAuth.onAuthStateChanged(function(user) {
     // 使用者未登入
   }
 });
-
-createApp(App)
-.use(store)
-.use(router)
-.use(VCalendar, {
-  componentPrefix: "vc",
-})
-.use(VueSplide)
-.mount("#app");
+const app = createApp(App);
+app.config.globalProperties.dateFormat = function(x) {
+  var dateObject = new Date(x);
+  const date = dateObject.getDate(); //15
+  const day = dateObject.getDay(); //5
+  const month = dateObject.getMonth() + 1; //6
+  const year = dateObject.getFullYear(); //2016
+  const weekday = [
+    "星期日",
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六",
+  ];
+  return `${year}/${month}/${date} ${weekday[day]}`
+};
+app
+  .use(store)
+  .use(router)
+  .use(VCalendar, {
+    componentPrefix: "vc",
+  })
+  .use(VueSplide)
+  .mount("#app");

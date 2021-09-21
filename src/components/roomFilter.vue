@@ -3,7 +3,6 @@
     <div class="selection">
       <div @click="showOptions" style="flex-direction:column;justify-content:center;align-items:start">
         <p>客房</p>
-        
         <p v-if="checkedItem.length">{{checkedItem.toString()}}</p>
       </div>
       <div>
@@ -143,13 +142,14 @@
         </div>
       </div> -->
     </div>
-     <div class="filtered_text" v-if="occupancy.length">
+     <div class="filtered_text" v-if="occupancy.length && startDate && endDate  ">
       <span class="question">您選擇的帳篷</span>:<span class="answer">{{ checkedItem.toString() }} </span><br>
       <span class="question">選擇入住日期</span>:<span class="answer">{{startDate.toLocaleDateString()}}</span><br>
       <span class="question">選擇退房日期</span>:<span class="answer">{{ endDate.toLocaleDateString() }} </span><br>
-      <span class="question">搜尋結果</span>:<span class="answer">共 {{ occupancy.length }}項</span> 
+      <span class="question">搜尋結果</span>:<span class="answer">共{{ occupancy.length }}種房型</span> 
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -172,7 +172,7 @@ export default {
     await this.GET_TENTDATA();
   },
   methods: {
-    ...mapActions(["GET_TENTDATA", "SEARCH_TENT"]),
+    ...mapActions([ "GET_TENTDATA","SEARCH_TENT"]),
     changeAllChecked() {
       if (this.checkedAll) {
         this.checkedItem = this.checkedAttr;
@@ -184,7 +184,7 @@ export default {
       var data = {
         tentType: this.checkedItem,
         stayFrom: parseInt(this.startDate.getTime() / 1000),
-        stayTo: parseInt(this.startDate.getTime() / 1000),
+        stayTo: parseInt(this.endDate.getTime() / 1000),
       };
       this.$store.dispatch("SEARCH_REST_TENT", data);
       this.optionsShow = false;

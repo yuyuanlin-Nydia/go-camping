@@ -9,7 +9,7 @@
     </div>
     <div v-else class="log_btn">
       <router-link :to="{ name: 'SignIn' }"><span>登入|註冊</span></router-link>
-      <router-link :to="{}"><span>購物車</span></router-link>
+      <router-link :to="{name:'BookingOrders'}"><span>購物車<b v-if="cart.length">({{cart.length}})</b></span></router-link>
     </div>
    
   </div>
@@ -77,7 +77,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["navToggle", "logIn", "user"]),
+    ...mapState(["navToggle", "logIn", "user","cart"]),
   },
 };
 </script>

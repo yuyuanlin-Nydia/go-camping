@@ -11,7 +11,8 @@ export default createStore({
     tentData: [],
     currentTent: [],
     occupancy: [],
-    occupancy_s:[]
+    occupancy_s:[],
+    cart:[]
   },
   mutations: {
     TOGGLE_NAV(state) {
@@ -40,8 +41,15 @@ export default createStore({
     },
     searchTent(state, payload) {
       state.occupancy.push(payload);
-     
+      console.log( state.occupancy)
     },
+    ADD_TO_CART(state,payload){
+      state.cart.push(payload)
+    },
+    DELETE_CART_ITEM(state,payload){
+      var x=state.cart.indexOf(payload);
+      state.cart.splice(x,1)
+    }
   },
   actions: {
     //所有訂位
@@ -81,7 +89,6 @@ export default createStore({
         };
         commit("SET_TENTDATA", data);
       });
-
       commit("RV_LOADED");
     },
     // 搜尋特定帳篷=>專案資訊
@@ -99,6 +106,8 @@ export default createStore({
           facility: doc.data().facility,
           offers: doc.data().offers,
           tentNo: doc.data().tentNo,
+          from:args.stayFrom,
+          to:args.stayTo,
         };
         data_arr.push(data)
       });
@@ -108,7 +117,6 @@ export default createStore({
     async SEARCH_REST_TENT({ dispatch, commit }, args) {
       var a = args.tentType.toString().split(","); //帳篷名陣列
       var received = await dispatch("SEARCH_TENT",args); // 等待 SEARCH_TENT 完成
-      console.log(args)
       // 統計日期內的總預訂房間數
       let start = args.stayFrom
       let end = args.stayTo
@@ -149,7 +157,6 @@ export default createStore({
           item.rest=item.tentNo
         }
         //傳給mutations
-        console.log(item)
         commit("searchTent", item);
       })
     },

@@ -10,6 +10,7 @@ https://stackoverflow.com/questions/51503633/click-and-edit-text-input-with-vue
 由於 JavaScript Date 時間戳是以毫秒為單位，而 Unix 時間戳是以秒為單位，所以我們可以將 Unix 時間戳乘以 1000 來轉換為 JavaScript 時間戳。如果 Unix 時間戳是 1607110465，那麼 JavaScript 時間戳就是 1607110465000。
 
 
+
 object.assign
 https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
@@ -52,6 +53,14 @@ https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 信件寄信:https://www.smtpjs.com/
 在index.html檔加入script CDN，在頁面使用記得用Email.send前面加上window.
 
+VUE3在全域使用共同function(例如日期的轉換)
+https://v3.cn.vuejs.org/guide/migration/global-api.html#config-ignoredelements-%E6%9B%BF%E6%8D%A2%E4%B8%BA-config-iscustomelement
+
+
+在做頁面的轉換=>created只會被調用一次 預訂房間點選訂購更多房間在預定無反應
+activated+keep-alive做緩存
+https://walkonnet.com/archives/ 
+
 網頁模板設計參考:
 首頁:
 住房專案(煙波大飯店):https://tainan.lakeshore.com.tw/latest-news/room-offers/
@@ -60,3 +69,4 @@ https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 訂房搜尋欄(Airbnb):https://www.airbnb.com.tw/
 訂房畫面(萬豪飯店):https://www.marriott.com.cn/reservation/rateListMenu.mi?defaultTab=standard
 周邊景點畫面(台北亞都麗緻大飯店):http://taipei.landishotelsresorts.com/chinese-trad/travel-sightseeing.php
+訂房流程(晶華飯店):https://member.silkshotelgroup.com/RT/Reservation/Checkout#_=_

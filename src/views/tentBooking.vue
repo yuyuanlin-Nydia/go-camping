@@ -5,7 +5,6 @@
         <template v-slot:title>帳篷預定</template>
       </Banner-top>
       <RoomFilter />
-
       <div class="room" v-for="(item, idx) in occupancy" :key="idx">
         <div>
           <ul>
@@ -30,19 +29,42 @@
         <div class="offers">
           <img src="https://placem.at/things?w=350" alt="" />
           <section>
-            <div
-              class="offer"
-              v-for="(item, idx) in occupancy[idx].offers"
-              :key="idx"
-            >
-              <div>{{ item.offerName }}</div>
+            <div class="offer" v-for="(item2, idx) in item.offers" :key="idx">
+              <div>{{ item2.offerName }}</div>
+
               <div>
                 <span class="price">{{
-                  item.lowestPrice.toLocaleString("en-us")
+                  item2.lowestPrice.toLocaleString("en-us")
                 }}</span
                 ><span class="small_txt">TWD/每晚</span>
               </div>
-              <button class="btn_brown2">預定</button>
+              <select
+                name="rmBook_amount"
+                id="rmBook_amount"
+                class="custom_select"
+                @change="
+                  update(
+                    item.tentName,
+                    item2.offerName,
+                    $event.target.value,
+                    item.to,
+                    item.from,
+                    item2.lowestPrice
+                  )
+                "
+              >
+                >
+
+                <option v-for="n in item.rest" :key="n" :value="n">
+                  預定{{ n }}間
+                </option>
+              </select>
+              <button
+                class="btn_brown2"
+                @click="addToCart(item.tentName, item2.offerName)"
+              >
+                預定
+              </button>
             </div>
           </section>
         </div>
@@ -103,8 +125,85 @@ export default {
     RoomFilter,
     BannerTop,
   },
+  data() {
+    return {
+      selected: [],
+    };
+  },
+
   mounted() {},
-  methods: {},
+  activated() {
+    this.$store.state.occupancy.forEach((element) => {
+      for (var i = 0; i < element.offers.length; i++) {
+        var data = {};
+        data["tent"] = element.tentName;
+        data["offer"] = element.offers[i].offerName;
+        data["no"] = 1;
+        data["to"] = element.to;
+        data["from"] = element.from;
+        data["price"] = element.offers[i].lowestPrice;
+        this.selected.push(data);
+      }
+    });
+  },
+  created() {
+    let _this = this;
+    this.$store.watch(
+      function (state) {
+        return state.occupancy;
+      },
+      function () {
+        _this.$store.state.occupancy.forEach((element) => {
+          for (var i = 0; i < element.offers.length; i++) {
+            var data = {};
+            data["tent"] = element.tentName;
+            data["offer"] = element.offers[i].offerName;
+            data["no"] = 1;
+            data["to"] = element.to;
+            data["from"] = element.from;
+            data["price"] = element.offers[i].lowestPrice;
+            _this.selected.push(data);
+          }
+        });
+      },
+      {
+        deep: true, //add this if u need to watch object properties change etc.
+      }
+    );
+  },
+  methods: {
+    update(tent, offer, no, to, from, price) {
+      var flag = true;
+      for (var i = 0; i < this.selected.length; i++) {
+        var tentName = this.selected[i].tent;
+        var offerName = this.selected[i].offer;
+        if (tentName == tent && offerName === offer) {
+          this.selected[i].no = parseInt(no);
+          flag = false;
+        }
+      }
+      if (flag) {
+        var data = {};
+        data["tent"] = tent;
+        data["offer"] = offer;
+        data["no"] = parseInt(no);
+        data["to"] = to;
+        data["from"] = from;
+        data["price"] = parseInt(price);
+        this.selected.push(data);
+      }
+    },
+    addToCart(tent, offer) {
+      console.log(this.selected);
+      console.log(this.occupancy);
+      for (var i = 0; i < this.selected.length; i++) {
+        if (tent == this.selected[i].tent && offer == this.selected[i].offer) {
+          this.$store.commit("ADD_TO_CART", this.selected[i]);
+          this.$router.push({ name: "BookingOrders" });
+        }
+      }
+    },
+  },
   computed: {
     ...mapState(["occupancy"]),
   },
@@ -190,7 +289,7 @@ export default {
   }
   .check_all_rooms {
     text-align: center;
-    margin-top:20px
+    margin-top: 20px;
   }
   .tents {
     display: flex;
@@ -221,5 +320,13 @@ export default {
       }
     }
   }
+}
+
+.custom_select {
+  /*在選擇框的最右側中間顯示小箭頭圖片*/
+  background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat
+    scroll right center transparent;
+  /*為下拉小箭頭留出一點位置，避免被文字覆蓋*/
+  padding-right: 14px;
 }
 </style>

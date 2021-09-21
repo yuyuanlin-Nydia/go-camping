@@ -1,9 +1,9 @@
 <template>
-  <div class="main" v-if="rvLoaded">
+  <div class="main" >
     <div>
       <Banner />
       <RoomFilter />
-      <div class="tents">
+      <div class="tents" v-if="rvLoaded">
         <div class="tent" v-for="(item, idx) in tentData" :key="idx">
           <img src="https://placem.at/places?w=500" alt="" />
           <div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import RoomFilter from "../components/roomFilter.vue";
 import Banner from "../components/bannerTop.vue"
 export default {
@@ -36,12 +36,9 @@ export default {
   data() {
     return {};
   },
-  created() {
-    this.GET_TENTDATA();
-  },
+  
   methods: {
     ...mapMutations(["SET_TENTDATA"]),
-    ...mapActions(["GET_TENTDATA"]),
   },
   computed: {
     ...mapState(["tentData", "rvLoaded"]),

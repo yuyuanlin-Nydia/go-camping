@@ -1,6 +1,11 @@
 <template>
   <Nav />
-  <router-view />
+  <router-view v-if="$route.meta.keepAlive" v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
+  <router-view v-if="!$route.meta.keepAlive" />
 
   <MyFooter />
 </template>
@@ -20,11 +25,10 @@ export default {
     MyFooter,
   },
   created() {
-    console.log(this.$store.state.logIn)
+    console.log(this.$store.state.logIn);
   },
   methods: {
     ...mapMutations(["TOGGLE_NAV"]),
-   
   },
 
   computed: {
@@ -34,4 +38,4 @@ export default {
 </script>
 
 <style lang="scss">
- </style>
+</style>
