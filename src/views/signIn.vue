@@ -14,9 +14,9 @@
         <!-- 登入欄位 -->
         <div v-if="currentTab === '登入'">
           <label for="">信箱:</label
-          ><input type="email" placeholder="請輸入信箱" /><br />
+          ><input type="email" placeholder="請輸入信箱" v-model="logEmail"/><br />
           <label for="">密碼:</label
-          ><input type="password" placeholder="請輸入密碼" />
+          ><input type="password" placeholder="請輸入密碼" v-model="logPassword"/>
           <button class="btn_brown2" @click="signIn">登入</button>
           <button class="btn_brown2 google" @click="googleSignIn">
             使用GOOGLE登入
@@ -70,6 +70,8 @@ export default {
       account: null,
       password: null,
       email: null,
+      logPassword: null,
+      logEmail: null,
     };
   },
   mounted() {
@@ -86,13 +88,14 @@ export default {
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
           alert("註冊成功!請重新登入");
-
-          this.$router.push("/signIn");
         })
         .catch(function (error) {
           alert(error.message);
         });
       this.isLoading = false;
+      this.currentTab="登入";
+      this.email='';
+      this.password=''
     },
     //   async register() {
     //     this.isLoading = true;
@@ -105,15 +108,19 @@ export default {
     //     });
     //     this.isLoading = false;
     //   },
-    // 登入
+    // 一般登入
     signIn() {
-      var email = this.email;
-      var password = this.password;
+      var email = this.logEmail;
+      var password = this.logPassword;
       firebaseAuth
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           alert("成功登入");
-          this.SET_LOGIN();
+          var userData = {
+            userName: this.logEmail.split("@")[0],
+            eMail: this.logEmail,
+          };
+          this.SET_LOGIN(userData );
           this.$router.push("/");
         })
         .catch(function (error) {

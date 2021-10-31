@@ -220,8 +220,7 @@ export default {
       const dataBase = db.collection("reservation").doc(data.docId);
       var d = data.date.seconds.toString();
       var rvDate = new Date(d.replace(/\//g, "-"));
-      console.log(d);
-      console.log(rvDate);
+     
       dataBase.update({
         name: data.name,
         adultNo: parseInt(data.adultNo),

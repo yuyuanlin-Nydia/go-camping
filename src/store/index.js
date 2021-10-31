@@ -31,6 +31,9 @@ export default createStore({
     SET_TENTDATA(state, payload) {
       state.tentData.push(payload);
     },
+    DELETE_TENTDATA(state) {
+      state.tentData.splice(0,state.tentData.length)
+    },
     SET_CURRENT_TENT(state, payload) {
       state.currentTent = state.tentData.filter((tent) => {
         return tent.id === payload;
@@ -41,7 +44,6 @@ export default createStore({
     },
     searchTent(state, payload) {
       state.occupancy.push(payload);
-      console.log( state.occupancy)
     },
     ADD_TO_CART(state,payload){
       state.cart.push(payload)
@@ -49,6 +51,9 @@ export default createStore({
     DELETE_CART_ITEM(state,payload){
       var x=state.cart.indexOf(payload);
       state.cart.splice(x,1)
+    },
+    DELETE_ALLCART(state){
+      state.cart.splice(0,state.cart.length)
     }
   },
   actions: {
@@ -77,6 +82,7 @@ export default createStore({
     },
     //所有帳篷
     async GET_TENTDATA({ commit }) {
+      commit("DELETE_TENTDATA");
       var getData = db.collection("tent");
       var results = await getData.get();
       results.forEach((doc) => {

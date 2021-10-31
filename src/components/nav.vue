@@ -1,17 +1,20 @@
 <template>
   <div class="top_nav">
     <div v-if="logIn" class="member_info">
-      <h5 class="member_accout">{{ user[0].userName }}您好</h5>
+      <span class="member_accout">{{ user[0].userName }}您好</span>
       <ul class="member_menu">
-        <li>會員主頁</li>
+        <router-link :to="{ name: 'MemberPage' }"><li>我的訂單</li></router-link>
         <li @click="logOut">登出</li>
       </ul>
     </div>
     <div v-else class="log_btn">
       <router-link :to="{ name: 'SignIn' }"><span>登入|註冊</span></router-link>
-      <router-link :to="{name:'BookingOrders'}"><span>購物車<b v-if="cart.length">({{cart.length}})</b></span></router-link>
+      <router-link :to="{ name: 'BookingOrders' }"
+        ><span
+          >購物車<b v-if="cart.length">({{ cart.length }})</b></span
+        ></router-link
+      >
     </div>
-   
   </div>
   <div class="right_nav">
     <div @click="toggle_nav" class="bar_icon">
@@ -77,7 +80,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["navToggle", "logIn", "user","cart"]),
+    ...mapState(["navToggle", "logIn", "user", "cart"]),
   },
 };
 </script>
@@ -101,40 +104,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 15px;
-  .member_info {
-    position: relative;
-    cursor: pointer;
 
-    &:hover {
-      ul.member_menu {
-        display: block;
-      }
-    }
-    h5.member_accout {
-      padding: 15px 5px;
-      background-color: #fff;
-      border-radius: 5px;
-    }
-    ul {
-      list-style: none;
-      display: none;
-      position: absolute;
-      top: 45px;
-      background-color: white;
-      padding: 0 0px;
-
-      li {
-        cursor: pointer;
-        text-align: center;
-        padding: 5px 20px;
-        border-bottom: 2px $color2 solid;
-        &:hover {
-          background-color: lightgray;
-        }
-      }
-    }
-  }
- 
   .bar_icon {
     background-color: #fff;
     display: flex;
@@ -149,18 +119,54 @@ export default {
     }
   }
 }
-.top_nav{
-   .log_btn {
+.top_nav {
+  .member_info {
+    cursor: pointer;
+    &:hover {
+      ul.member_menu {
+        display: block;
+      }
+    }
+    &:hover {
+      span.member_accout {
+        text-decoration: underline;
+      }
+    }
+    span.member_accout {
+      padding: 3px 10px;
+      background-color: $color2;
+      position: absolute;
+      right: 200px;
+    }
+    ul {
+      list-style: none;
+      display: none;
+      position: absolute;
+      right: 200px;
+      top: 30px;
+      background-color: white;
+      padding: 0 0px;
+      li {
+        cursor: pointer;
+        text-align: center;
+        padding: 5px 27px;
+        border-bottom: 2px $color2 solid;
+        &:hover {
+          background-color: lightgray;
+        }
+      }
+    }
+  }
+  .log_btn {
     font-weight: 500;
     font-size: 18px;
     cursor: pointer;
     position: absolute;
     right: 200px;
-    span{
-      padding:3px 10px;
+    span {
+      padding: 3px 10px;
       background-color: $color2;
       color: white;
-      
     }
     a {
       &:hover {
@@ -210,4 +216,5 @@ ul.myNav {
     height: 50px;
   }
 }
+
 </style>

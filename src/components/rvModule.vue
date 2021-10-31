@@ -88,11 +88,13 @@ export default {
   },
   methods: {
     async uploadReservation() {
+      console.log(this.$store.state.user[0])
       this.isLoading = true;
       const database = db.collection("reservation").doc();
 
       await database.set({
         rvId: uid(6),
+        email:this.$store.state.user[0].eMail,
         name: this.name,
         phoneNo: this.phoneNo,
         adultNo: this.adultNo,

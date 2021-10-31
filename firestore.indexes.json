@@ -1,0 +1,84 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "reservation",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "date",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tent",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tentName",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "stayDate",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tentBooking",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "tentName",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "stayDate",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tentBooking",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tentName",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "stayDate",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "tentBooking",
+      "fieldPath": "tentName",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    }
+  ]
+}

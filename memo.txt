@@ -61,6 +61,10 @@ https://v3.cn.vuejs.org/guide/migration/global-api.html#config-ignoredelements-%
 activated+keep-alive做緩存
 https://walkonnet.com/archives/ 
 
+
+字平均分配欄寬(結帳頁):
+https://www.itread01.com/p/649544.html
+
 網頁模板設計參考:
 首頁:
 住房專案(煙波大飯店):https://tainan.lakeshore.com.tw/latest-news/room-offers/
@@ -69,4 +73,6 @@ https://walkonnet.com/archives/
 訂房搜尋欄(Airbnb):https://www.airbnb.com.tw/
 訂房畫面(萬豪飯店):https://www.marriott.com.cn/reservation/rateListMenu.mi?defaultTab=standard
 周邊景點畫面(台北亞都麗緻大飯店):http://taipei.landishotelsresorts.com/chinese-trad/travel-sightseeing.php
-訂房流程(晶華飯店):https://member.silkshotelgroup.com/RT/Reservation/Checkout#_=_
+訂房流程(晶華飯店):https://member.silkshotelgroup.com/RT
+
+10.27做到顯示會員餐廳訂位  更改訂位的日期

@@ -42,6 +42,7 @@ a {
 }
 a:hover {
   text-decoration: none !important;
+  color: black;
 }
 .btn_brown1 {
   color: $color1;
@@ -99,12 +100,18 @@ select {
   border: 1px solid lightgrey;
   border-radius: 5px;
   appearance: none;
-  // width: 80%;
 
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
   outline: none;
-
+  cursor: pointer;
+}
+.custom_select {
+  /*在選擇框的最右側中間顯示小箭頭圖片*/
+  background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat
+    scroll right center transparent;
+  /*為下拉小箭頭留出一點位置，避免被文字覆蓋*/
+  padding-right: 14px;
 }
 

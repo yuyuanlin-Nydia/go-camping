@@ -194,8 +194,6 @@ export default {
       }
     },
     addToCart(tent, offer) {
-      console.log(this.selected);
-      console.log(this.occupancy);
       for (var i = 0; i < this.selected.length; i++) {
         if (tent == this.selected[i].tent && offer == this.selected[i].offer) {
           this.$store.commit("ADD_TO_CART", this.selected[i]);
@@ -322,11 +320,5 @@ export default {
   }
 }
 
-.custom_select {
-  /*在選擇框的最右側中間顯示小箭頭圖片*/
-  background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat
-    scroll right center transparent;
-  /*為下拉小箭頭留出一點位置，避免被文字覆蓋*/
-  padding-right: 14px;
-}
+
 </style>

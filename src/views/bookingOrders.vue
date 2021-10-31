@@ -23,6 +23,7 @@
           </div>
           <div>
             <p class="info">
+              {{cart[idx].to}}
               入住日期： {{ dateFormat(cart[idx].to * 1000) }} <br />
               退房日期： {{ dateFormat(cart[idx].from * 1000) }}
             </p>
@@ -76,7 +77,7 @@
 
 <script>
 import Banner from "../../src/components/bannerTop.vue";
-import { mapState } from "vuex";
+import { mapState} from "vuex";
 export default {
   components: {
     Banner,
@@ -84,7 +85,6 @@ export default {
   mounted() {},
   methods: {
     deleteItem(item) {
-      console.log(item);
       this.$store.commit("DELETE_CART_ITEM", item);
     },
   },

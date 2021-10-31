@@ -1,15 +1,22 @@
 <template>
   <div v-if="tentData.length">
     <div class="selection">
-      <div @click="showOptions" style="flex-direction:column;justify-content:center;align-items:start">
-        <p>客房</p>
-        <p v-if="checkedItem.length">{{checkedItem.toString()}}</p>
+      <div
+        @click="showOptions"
+        style="
+          flex-direction: column;
+          justify-content: center;
+          align-items: start;
+        "
+      >
+        <p>選擇客房</p>
+        <p v-if="checkedItem.length">{{ checkedItem.toString() }}</p>
       </div>
       <div>
         <v-date-picker
           class="inline-block h-full"
           v-model="startDate"
-          :min-date="new Date().setDate(new Date().getDate() + 1)"
+          :min-date="new Date().setDate(new Date().getDate() )"
         >
           <template v-slot="{ inputValue, togglePopover }">
             <div class="flex items-center">
@@ -28,8 +35,7 @@
                     appearance-none
                     border
                     rounded-r
-                    focus:outline-none
-                    focus:border-blue-500
+                    focus:outline-none focus:border-blue-500
                   "
                   readonly
                 />
@@ -44,7 +50,7 @@
         <v-date-picker
           class="inline-block h-full"
           v-model="endDate"
-          :min-date="new Date().setDate(new Date(startDate).getDate() + 1)"
+          :min-date="new Date(startDate).setDate(new Date(startDate).getDate() + 1)"
         >
           <template v-slot="{ inputValue, togglePopover }">
             <div class="flex items-center">
@@ -63,8 +69,7 @@
                     appearance-none
                     border
                     rounded-r
-                    focus:outline-none
-                    focus:border-blue-500
+                    focus:outline-none focus:border-blue-500
                   "
                   readonly
                 />
@@ -78,7 +83,7 @@
       </div> -->
       <button class="btn_brown1 search_btn" @click="searchTent">搜尋</button>
     </div>
-   
+
     <div class="filter_content">
       <div class="tent_choice" v-if="optionsShow">
         <label for="tentsAll"
@@ -142,14 +147,22 @@
         </div>
       </div> -->
     </div>
-     <div class="filtered_text" v-if="occupancy.length && startDate && endDate  ">
-      <span class="question">您選擇的帳篷</span>:<span class="answer">{{ checkedItem.toString() }} </span><br>
-      <span class="question">選擇入住日期</span>:<span class="answer">{{startDate.toLocaleDateString()}}</span><br>
-      <span class="question">選擇退房日期</span>:<span class="answer">{{ endDate.toLocaleDateString() }} </span><br>
-      <span class="question">搜尋結果</span>:<span class="answer">共{{ occupancy.length }}種房型</span> 
+    <div class="filtered_text" v-if="occupancy.length && startDate && endDate">
+      <span class="question">您選擇的帳篷</span>:<span class="answer"
+        >{{ checkedItem.toString() }} </span
+      ><br />
+      <span class="question">選擇入住日期</span>:<span class="answer">{{
+        startDate.toLocaleDateString()
+      }}</span
+      ><br />
+      <span class="question">選擇退房日期</span>:<span class="answer"
+        >{{ endDate.toLocaleDateString() }} </span
+      ><br />
+      <span class="question">搜尋結果</span>:<span class="answer"
+        >共{{ occupancy.length }}種房型</span
+      >
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -158,7 +171,7 @@ export default {
   name: "RoomFilter",
   data() {
     return {
-      startDate: null,
+      startDate: new Date(),
       endDate: null,
       adult: 0,
       child: 0,
@@ -172,7 +185,7 @@ export default {
     await this.GET_TENTDATA();
   },
   methods: {
-    ...mapActions([ "GET_TENTDATA","SEARCH_TENT"]),
+    ...mapActions(["GET_TENTDATA", "SEARCH_TENT"]),
     changeAllChecked() {
       if (this.checkedAll) {
         this.checkedItem = this.checkedAttr;
@@ -195,6 +208,7 @@ export default {
   },
   computed: {
     ...mapState(["tentsName", "tentData", "occupancy"]),
+   
   },
 
   watch: {
@@ -245,12 +259,11 @@ export default {
     color: white;
   }
 }
-.filtered_text{
+.filtered_text {
   padding: 10px 15%;
-  .answer{
+  .answer {
     font-weight: bold;
   }
-  
 }
 .filter_content {
   display: flex;
