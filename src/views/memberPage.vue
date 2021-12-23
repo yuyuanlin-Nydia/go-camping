@@ -25,198 +25,249 @@
             帳篷訂房紀錄
           </button>
         </div>
-        <div
-          class="resRev"
-          v-if="nowTab == 'restaurant' && resBooking.length > 0"
-        >
-          <h5><b>餐廳訂位紀錄</b></h5>
-          <div
-            v-for="(order, idx) in resBooking"
-            :key="order.rvId"
-            class="perBooking"
-            v-bind:class="{
-              canceled:
-                order.status == 'canceled' ||
-                order.date.seconds * 1000 <= new Date().getTime(),
-            }"
-          >
-            <div style="flex: 1">
-              <div v-if="updateIdx !== order.id || updateIdx == null">
-                <b>用餐時間</b> : {{ dateFormat(order.date.seconds * 1000) }}
-                {{
-                  order.time.substring(0, 2) + ":" + order.time.substring(2, 4)
-                }}
-              </div>
-              <div v-if="updateIdx == order.id">
-                <b>用餐時間</b> :
-                <v-date-picker
-                  v-model="originalDate"
-                  :masks="masks"
-                  :input-debounce="500"
-                  :max-date="new Date().setDate(new Date().getDate() + 30)"
+        <div class="resRev" v-if="nowTab == 'restaurant'">
+            <h5><b>餐廳訂位紀錄</b></h5>
+          <div  v-if="resBooking.length > 0">
+            <div
+              v-for="(order, idx) in resBooking"
+              :key="order.rvId"
+              class="perBooking"
+              v-bind:class="{
+                canceled:
+                  order.status == 'canceled' ||
+                  order.date.seconds * 1000 <= new Date().getTime(),
+              }"
+              :style="{
+                opacity:
+                  order.status == 'booked' && pastDays(order.date.seconds)
+                    ? '0.7'
+                    : '1',
+              }"
+            >
+              <div style="flex: 1">
+                <div v-if="updateIdx !== order.id || updateIdx == null">
+                  <b>用餐時間</b> : {{ dateFormat(order.date.seconds * 1000) }}
+                  {{
+                    order.time.substring(0, 2) +
+                    ":" +
+                    order.time.substring(2, 4)
+                  }}
+                </div>
+                <div v-if="updateIdx == order.id">
+                  <b>用餐時間</b> :
+                  <v-date-picker
+                    v-model="originalDate"
+                    :masks="masks"
+                    :input-debounce="500"
+                    :max-date="new Date().setDate(new Date().getDate() + 30)"
+                  >
+                    <template v-slot="{ inputValue, inputEvents }">
+                      <input
+                        class="bg-white border px-2 py-1 rounded"
+                        :value="inputValue"
+                        v-on="inputEvents"
+                      />
+                    </template>
+                  </v-date-picker>
+                  <select name="time" id="" v-model="resBooking[idx].time">
+                    <option
+                      :selected="resBooking[idx].time == '1100'"
+                      value="1100"
+                    >
+                      11:00
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1130'"
+                      value="1130"
+                    >
+                      11:30
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1200'"
+                      value="1200"
+                    >
+                      12:00
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1230'"
+                      value="1230"
+                    >
+                      12:30
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1330'"
+                      value="1300"
+                    >
+                      13:00
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1330'"
+                      value="1330"
+                    >
+                      13:30
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1400'"
+                      value="1400"
+                    >
+                      14:00
+                    </option>
+                    <option
+                      :selected="resBooking[idx].time == '1430'"
+                      value="1430"
+                    >
+                      14:30
+                    </option>
+                  </select>
+                </div>
+                <div v-if="updateIdx !== order.id || updateIdx == null">
+                  <b>大人人數</b> : {{ order.adultNo }}位
+                </div>
+                <div v-if="updateIdx == order.id">
+                  <b>大人人數</b> :
+                  <input
+                    class="changeInput"
+                    type="text"
+                    v-model="resBooking[idx].adultNo"
+                  />位
+                </div>
+                <div v-if="updateIdx !== order.id || updateIdx == null">
+                  <b>小孩人數</b> : {{ order.childNo }}位
+                </div>
+                <div v-if="updateIdx == order.id">
+                  <b>小孩人數</b> :
+                  <input
+                    class="changeInput"
+                    type="text"
+                    v-model="resBooking[idx].childNo"
+                  />位
+                </div>
+                <p
+                  v-if="
+                    order.status == 'booked' && !pastDays(order.date.seconds)
+                  "
                 >
-                  <template v-slot="{ inputValue, inputEvents }">
-                    <input
-                      class="bg-white border px-2 py-1 rounded"
-                      :value="inputValue"
-                      v-on="inputEvents"
-                    />
-                  </template>
-                </v-date-picker>
-                <select name="time" id="" v-model="resBooking[idx].time">
-                  <option
-                    :selected="resBooking[idx].time == '1100'"
-                    value="1100"
-                  >
-                    11:00
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1130'"
-                    value="1130"
-                  >
-                    11:30
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1200'"
-                    value="1200"
-                  >
-                    12:00
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1230'"
-                    value="1230"
-                  >
-                    12:30
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1330'"
-                    value="1300"
-                  >
-                    13:00
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1330'"
-                    value="1330"
-                  >
-                    13:30
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1400'"
-                    value="1400"
-                  >
-                    14:00
-                  </option>
-                  <option
-                    :selected="resBooking[idx].time == '1430'"
-                    value="1430"
-                  >
-                    14:30
-                  </option>
-                </select>
+                  <b>訂位狀態</b> : 已訂位
+                </p>
+                <p
+                  v-if="
+                    order.status == 'booked' && pastDays(order.date.seconds)
+                  "
+                >
+                  <b>訂位狀態</b> : 已用餐
+                </p>
+                <p v-if="order.status == 'canceled'">
+                  <b>訂位狀態</b> : 已取消
+                </p>
               </div>
-              <div v-if="updateIdx !== order.id || updateIdx == null">
-                <b>大人人數</b> : {{ order.adultNo }}位
+              <div
+                class="change_btns"
+                v-if="
+                  updateIdx == null &&
+                  order.status == 'booked' &&
+                  order.date.seconds * 1000 > new Date().getTime()
+                "
+              >
+                <button class="btn_green1" @click="cxlRev(order.id)">
+                  取消訂位
+                </button>
+                <button class="btn_green1" @click="changeRev(order.id, idx)">
+                  更改訂位
+                </button>
               </div>
-              <div v-if="updateIdx == order.id">
-                <b>大人人數</b> :
-                <input
-                  class="changeInput"
-                  type="text"
-                  v-model="resBooking[idx].adultNo"
-                />位
+              <div
+                class="change_btns"
+                v-if="updateIdx == order.id && order.status == 'booked'"
+              >
+                <button class="btn_grey1" @click="cfmChange(order.id, idx)">
+                  確認更改
+                </button>
+                <button class="btn_grey1" @click="cxlChange()">取消更改</button>
               </div>
-              <div v-if="updateIdx !== order.id || updateIdx == null">
-                <b>小孩人數</b> : {{ order.childNo }}位
-              </div>
-              <div v-if="updateIdx == order.id">
-                <b>小孩人數</b> :
-                <input
-                  class="changeInput"
-                  type="text"
-                  v-model="resBooking[idx].childNo"
-                />位
-              </div>
-
-              <p v-if="order.status == 'booked'"><b>訂位狀態</b> : 已訂位</p>
-              <p v-if="order.status == 'canceled'"><b>訂位狀態</b> : 已取消</p>
-            </div>
-            <div
-              class="change_btns"
-              v-if="
-                updateIdx == null &&
-                order.status == 'booked' &&
-                order.date.seconds * 1000 > new Date().getTime()
-              "
-            >
-              <button class="btn_green1" @click="cxlRev(order.id)">
-                取消訂位
-              </button>
-              <button class="btn_green1" @click="changeRev(order.id, idx)">
-                更改訂位
-              </button>
-            </div>
-            <div
-              class="change_btns"
-              v-if="updateIdx == order.id && order.status == 'booked'"
-            >
-              <button class="btn_grey1" @click="cfmChange(order.id, idx)">
-                確認更改
-              </button>
-              <button class="btn_grey1" @click="cxlChange()">取消更改</button>
             </div>
           </div>
+          <div v-if="resBooking.length == 0">
+            <p>目前您沒有餐廳訂位紀錄唷!</p>
+          </div>
         </div>
-        <div v-if="resBooking.length == 0">
-          <h5><b>餐廳訂位紀錄</b></h5>
-          <br />
-          <p>目前您沒有餐廳訂位紀錄唷!</p>
-        </div>
-        <div class="tentRev" v-if="nowTab == 'tent' && tentBooking.length > 0">
+        <div class="tentRev" v-if="nowTab == 'tent'">
           <h5><b>帳篷訂房紀錄</b></h5>
-          <div
-            v-for="(eachBooking, idx) in tentBooking"
-            :key="idx"
-            class="perBooking"
-            v-bind:class="{
-              canceled: eachBooking.status == 'canceled',
-            }"
-          >
-            <div style="flex: 1">
-              <p v-if="eachBooking.status == 'booked'">
-                <b>訂位狀態</b> : 已訂房
-              </p>
-              <p v-if="eachBooking.status == 'canceled'">
-                <b>訂位狀態</b> : 已取消
-              </p>
-              <div
-                v-for="(item, idx2) in eachBooking.tentInfo"
-                :key="idx2"
-                class="single_offer"
+          <div>
+            <div v-if="tentBooking.length == 0">
+              <div  
+                v-for="(eachBooking, idx) in tentBooking"
+                :key="idx"
+                class="perBooking"
                 v-bind:class="{
-                  single_offer_canceled: eachBooking.status == 'canceled',
+                  canceled: eachBooking.status == 'canceled',
+                }"
+                :style="{
+                  opacity:
+                    eachBooking.status == 'booked' &&
+                    pastDays(eachBooking.tentInfo[0].to)
+                      ? '0.7'
+                      : '1',
                 }"
               >
-                <b>入住日期</b> : {{ dateFormat(new Date(item.from * 1000))
-                }}<br />
-                <b>退房日期</b> : {{ dateFormat(new Date(item.to * 1000)) }}
-                <br />
-                <b>入住房型</b> : {{ item.tent }} <br />
-                <b>房型專案</b> : {{ item.offer }}<br />
-                <b>價格</b> : TWD {{ item.price }} 元<br />
-                <b>間數</b> : {{ item.no }} 間<br />
+                <div style="flex: 1">
+                  <p
+                    v-if="
+                      eachBooking.status == 'booked' &&
+                      !pastDays(eachBooking.tentInfo[0].to)
+                    "
+                  >
+                    <b>訂位狀態</b> : 已訂房
+                  </p>
+                  <p
+                    v-if="
+                      eachBooking.status == 'booked' &&
+                      pastDays(eachBooking.tentInfo[0].to)
+                    "
+                  >
+                    <b>訂位狀態</b> : 已入住
+                  </p>
+                  <p v-if="eachBooking.status == 'canceled'">
+                    <b>訂位狀態</b> : 已取消
+                  </p>
+                  <div
+                    v-bind:class="{
+                      booked_info: eachBooking.status == 'booked',
+                    }"
+                  >
+                    <div
+                      v-for="(item, idx2) in eachBooking.tentInfo"
+                      :key="idx2"
+                      class="single_offer"
+                      v-bind:class="{
+                        single_offer_canceled: eachBooking.status == 'canceled',
+                      }"
+                      style="width: 100%; margin: 1% 0"
+                    >
+                      <b>入住日期</b> : {{ dateFormat(new Date(item.from * 1000))
+                      }}<br />
+                      <b>退房日期</b> : {{ dateFormat(new Date(item.to * 1000)) }}
+                      <br />
+                      <b>入住房型</b> : {{ item.tent }} <br />
+                      <b>房型專案</b> : {{ item.offer }}<br />
+                      <b>價格</b> : TWD {{ item.price.toLocaleString() }} 元<br />
+                      <b>間數</b> : {{ item.no }} 間<br />
+                    </div>
+  
+                    <div
+                      class="change_btns"
+                      v-if="eachBooking.status == 'booked'"
+                    >
+                      <button class="btn_brown1">取消帳篷</button>
+                      <button class="btn_brown1">更改訂房</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="change_btns" v-if="eachBooking.status == 'booked'">
-              <button class="btn_brown1">取消帳篷</button>
-              <button class="btn_brown1">更改訂房</button>
+            <div v-if="tentBooking.length == 0">
+              <p>目前您沒有帳篷訂房紀錄唷!</p>
             </div>
           </div>
-        </div>
-        <div v-if="tentBooking.length == 0">
-          <h5><b>帳篷訂房紀錄</b></h5>
-          <br />
-          <p>目前您沒有帳篷訂房紀錄唷!</p>
         </div>
       </div>
     </div>
@@ -255,6 +306,7 @@ export default {
         .collection("reservation")
         .where("email", "==", this.$store.state.user[0].eMail);
       var result = await dataBase.get();
+
       result.forEach((doc) => {
         var data = {
           id: doc.id,
@@ -268,10 +320,14 @@ export default {
         };
         this.resBooking.push(data);
       });
+      this.resBooking.sort(function (a, b) {
+        return a.date.seconds < b.date.seconds ? 1 : -1;
+      });
+      console.log(this.resBooking);
       this.loadEnd = true;
     },
     async getTentRev() {
-      this.resBooking.length = 0;
+      this.tentBooking.length = 0;
       var dataBase = db
         .collection("tentRev")
         .where("email", "==", this.$store.state.user[0].eMail);
@@ -284,7 +340,9 @@ export default {
         };
         this.tentBooking.push(data);
       });
-      console.log(this.tentBooking);
+      this.tentBooking.sort(function (a, b) {
+        return a.tentInfo[0].from < b.tentInfo[0].from ? 1 : -1;
+      });
       this.loadEnd = true;
     },
     cxlRev(id) {
@@ -315,6 +373,10 @@ export default {
     },
     cxlChange() {
       this.updateIdx = null;
+    },
+    pastDays(date) {
+      var status = new Date(date * 1000) < new Date() ? true : false;
+      return status;
     },
   },
 };
@@ -350,8 +412,21 @@ export default {
       flex: 1;
     }
     .change_btns {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 30%;
       button {
-        margin: 10px;
+        margin: 4%;
+      }
+      .btn_green1,
+      .btn_green2,
+      .btn_brown1,
+      .btn_brown1 {
+        border-radius: 0;
+        padding: 3% 10%;
       }
     }
   }
@@ -363,10 +438,14 @@ export default {
 .tentRev {
   .perBooking {
     border: 2px solid $color1;
-    .single_offer {
+    .booked_info {
+      display: flex;
       background-color: $color1;
-      margin: 1.5%;
-      padding: 2%;
+      width: 100%;
+    }
+    .single_offer {
+      padding: 1%;
+      width: 70%;
     }
     .single_offer_canceled {
       background-color: grey;
@@ -386,8 +465,11 @@ export default {
   }
 }
 .btn_green1,
-.btn_green2 {
+.btn_green2,
+.btn_brown1,
+.btn_brown2 {
   border-radius: 0;
-  padding: 7px 40px;
+  padding: 2% 15%;
+  width: 50%;
 }
 </style>

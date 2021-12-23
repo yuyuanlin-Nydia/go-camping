@@ -26,6 +26,7 @@ export default createStore({
     },
     SET_LOGIN(state, payload) {
       state.logIn = !state.logIn;
+      state.user.length=0;
       state.user.push(payload);
     },
     SET_TENTDATA(state, payload) {

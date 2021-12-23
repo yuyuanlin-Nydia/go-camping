@@ -182,7 +182,7 @@ export default {
   margin: 0 auto;
   border: 40px solid rgba(224, 145, 80, 0.5);
   margin-top: 50px;
-  padding: 40px 30px;
+  padding: 5%;
   box-sizing: content-box;
   h2{
     font-weight: bold;
@@ -204,8 +204,8 @@ export default {
         }
       }
       div {
-        position: absolute;
-        top: 80%;
+        position: relative;
+        top: -5%;
         width: 100%;
         .number {
           color: white;

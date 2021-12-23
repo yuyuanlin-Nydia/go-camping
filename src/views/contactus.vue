@@ -9,23 +9,33 @@
         <table class="m_table">
           <tr>
             <td>主旨</td>
-            <td><input type="text" placeholder="請填寫主旨"  v-model="subject"/></td>
+            <td>
+              <input type="text" placeholder="請填寫主旨" v-model="subject" />
+            </td>
           </tr>
           <tr>
             <td>姓名</td>
-            <td><input type="text" placeholder="請填寫姓名" v-model="name"/></td>
+            <td>
+              <input type="text" placeholder="請填寫姓名" v-model="name" />
+            </td>
           </tr>
           <tr>
             <td>電話</td>
-            <td><input type="text" placeholder="請填寫電話" v-model="tele"/></td>
+            <td>
+              <input type="text" placeholder="請填寫電話" v-model="tele" />
+            </td>
           </tr>
           <tr>
             <td>信箱</td>
-            <td><input type="text" placeholder="請填寫email" v-model="email"/></td>
+            <td>
+              <input type="text" placeholder="請填寫email" v-model="email" />
+            </td>
           </tr>
           <tr>
             <td>內容</td>
-            <td><textarea placeholder="請填寫內容" v-model="content"></textarea></td>
+            <td>
+              <textarea placeholder="請填寫內容" v-model="content"></textarea>
+            </td>
           </tr>
         </table>
         <button class="btn_brown2" @click="sendEmail">發送</button>
@@ -82,22 +92,25 @@ export default {
   components: {
     BannerTop,
   },
-  data(){
-    return{
-      subject:null,
-      name:null,
-      tele:null,
-      email:null,
-      content:null
-    }
+  data() {
+    return {
+      subject: null,
+      name: null,
+      tele: null,
+      email: null,
+      content: null,
+    };
   },
   methods: {
     sendEmail() {
       window.Email.send({
-        SecureToken: "26ff14e7-39ad-4186-b69a-f10f564f3780",
+        SecureToken: "0ac6a621-acf6-426d-be04-d0826e30af24",
+        // Host: "smtp.elasticemail.com",
+        // Username: "sandy6513ab",
+        // Password: "Thanks613",
         To: "sandy6513ab@gmail.com",
-        From: this.email,
-        Subject: this.subject,
+        From: "yuyuanlin613@gmial.com",
+        Subject: "Sending Email using javascript with SMTPJS",
         Body: `<p style="font-size:18px"><b>姓名</b>:${this.name}<br><br>
         <b>電話</b>:${this.tele} <br><br>
         <b>內文</b>:${this.content}</p>`,

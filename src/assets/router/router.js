@@ -136,8 +136,7 @@ router.beforeEach(async (to, from, next) => {
   let user = fireBase.auth().currentUser;
   let admin = null;
   if (user) {
-    let token = await user.getIdTokenResult;
-    console.log(token);
+    let token = await user.getIdTokenResult();
     admin = token.claims.admin;
     console.log(admin);
   }

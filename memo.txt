@@ -51,7 +51,9 @@ https://eason920.medium.com/%E5%85%88%E6%9C%89%E6%9C%AC%E6%A9%9F%E8%B3%87%E5%A4%
 https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 
 信件寄信:https://www.smtpjs.com/
+https://note.jackie.com.tw/index.php/2020/09/05/smtpjs-send-gmail/
 在index.html檔加入script CDN，在頁面使用記得用Email.send前面加上window.
+網頁上申請secureToken(domaim那格填) gmail.com
 
 VUE3在全域使用共同function(例如日期的轉換)
 https://v3.cn.vuejs.org/guide/migration/global-api.html#config-ignoredelements-%E6%9B%BF%E6%8D%A2%E4%B8%BA-config-iscustomelement
