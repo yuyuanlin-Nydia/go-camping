@@ -78,23 +78,41 @@
 
 <script>
 import BannerTop from "../components/bannerTop.vue";
+// import emailjs from 'emailjs-com';
 export default {
   components: {
     BannerTop,
   },
   data(){
     return{
-      subject:null,
-      name:null,
-      tele:null,
-      email:null,
-      content:null
+      subject:'信件',
+      name:'林小姐',
+      tele:'0989123456',
+      email:'yuyuanlin613@gmail.com',
+      content:'訂房'
     }
   },
   methods: {
     sendEmail() {
+  //     let templateParams = {
+  //     "userMail": "sandy6513ab@gmail.com",
+  //     "user": "Lai",
+  //     "img": "<img src='https://blog.devdon.com/wp-content/uploads/2018/05/good-ideas-logo.png'></img>"
+  //   }
+
+  //   let service_id = "default_service";
+  //   let template_id = "template_qfit1he";
+  //   let userID = "user_RtSc5vIZxc8QmHcvyu6yT"
+  //   emailjs.send(service_id, template_id, templateParams,userID)
+  //     .then((response) => {
+  //       console.log('SUCCESS!', response.status, response.text);
+  //     })
+  //     .catch((error) => {
+  //       console.log('FAILED...', error);
+  //     })
+  // }
       window.Email.send({
-        SecureToken: "26ff14e7-39ad-4186-b69a-f10f564f3780",
+        SecureToken: "20acc933-aa21-4b75-ba54-c2a1226dd323",
         To: "sandy6513ab@gmail.com",
         From: this.email,
         Subject: this.subject,
@@ -103,6 +121,7 @@ export default {
         <b>內文</b>:${this.content}</p>`,
       }).then((message) => alert(message));
     },
+    
   },
 };
 </script>
