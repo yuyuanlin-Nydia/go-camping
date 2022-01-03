@@ -137,7 +137,10 @@ router.beforeEach(async (to, from, next) => {
   let admin = null;
   if (user) {
     let token = await user.getIdTokenResult();
+<<<<<<< HEAD
     console.log(token);
+=======
+>>>>>>> 040d761351a1ccc1ad06c82edc3d2b56e4924bba
     admin = token.claims.admin;
     console.log(admin);
   }

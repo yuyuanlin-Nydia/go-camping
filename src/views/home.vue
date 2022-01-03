@@ -158,8 +158,7 @@ export default {
     .column3 {
       width: 15%;
     }
-    th,
-    td {
+    tr{
       border-bottom: 1px solid #ddd;
     }
     th {
@@ -260,6 +259,7 @@ export default {
 }
 
 .splide__slide {
+  // margin-bottom: 3%;
   img {
     width: 100%;
   }

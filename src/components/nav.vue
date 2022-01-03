@@ -3,7 +3,9 @@
     <div v-if="logIn" class="member_info">
       <span class="member_accout">{{ user[0].userName }}您好</span>
       <ul class="member_menu">
-        <router-link :to="{ name: 'MemberPage' }"><li>我的訂單</li></router-link>
+        <router-link :to="{ name: 'MemberPage' }"
+          ><li>我的訂單</li></router-link
+        >
         <li @click="logOut">登出</li>
       </ul>
     </div>
@@ -98,15 +100,15 @@ export default {
 }
 .right_nav {
   float: right;
-  position: absolute;
+  position: fixed;
   right: 5%;
-  top: 1%;
+  top: 2%;
   display: flex;
   align-items: center;
   gap: 15px;
-
+  z-index: 50;
   .bar_icon {
-    background-color: #fff;
+    background-color: $color2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,6 +122,7 @@ export default {
   }
 }
 .top_nav {
+  
   .member_info {
     cursor: pointer;
     &:hover {
@@ -161,8 +164,9 @@ export default {
     font-weight: 500;
     font-size: 18px;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     right: 200px;
+    z-index: 50;
     span {
       padding: 3px 10px;
       background-color: $color2;
@@ -182,15 +186,14 @@ ul.myNav {
   flex-direction: column;
   justify-content: flex-start;
   background-color: $color2;
-  width: 300px;
+  width: 20%;
+  padding-top: 5%;
   height: 100vh;
   position: fixed;
   z-index: 100;
-  cursor: pointer;
-
   li {
     display: inline-block;
-    padding: 20px 0;
+    margin: 20px 0;
     text-align: center;
   }
   li span {
@@ -198,6 +201,7 @@ ul.myNav {
     font-size: 18px;
     font-weight: 800;
     position: relative;
+    cursor: pointer;
     &:after {
       content: "";
       width: 0%;
@@ -213,8 +217,8 @@ ul.myNav {
     }
   }
   li img {
-    height: 50px;
+    width: 30%;
+    cursor: pointer;
   }
 }
-
 </style>

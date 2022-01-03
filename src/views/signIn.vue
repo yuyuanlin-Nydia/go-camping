@@ -33,13 +33,6 @@
             v-model="email"
           />
           <br />
-          <!-- <label for="">帳號:</label
-          ><input
-            type="text"
-            placeholder="請輸入6位以上帳號"
-            required
-            v-model="account"
-          /><br /> -->
           <label for="">密碼:</label
           ><input
             type="password"
@@ -97,22 +90,12 @@ export default {
       this.email='';
       this.password=''
     },
-    //   async register() {
-    //     this.isLoading = true;
-    //     const dataBase = db.collection("user").doc();
-
-    //     await dataBase.set({
-    //       account: this.account,
-    //       password: this.password,
-    //       email: this.email,
-    //     });
-    //     this.isLoading = false;
-    //   },
     // 一般登入
     signIn() {
       var email = this.logEmail;
       var password = this.logPassword;
-      firebaseAuth
+      if(email && password){
+           firebaseAuth
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           alert("成功登入");
@@ -120,16 +103,21 @@ export default {
             userName: this.logEmail.split("@")[0],
             eMail: this.logEmail,
           };
-          this.SET_LOGIN(userData );
+          this.SET_LOGIN(userData);
           this.$router.push("/");
-        })
+        }, err => {
+            alert(err.message)
+         })
         .catch(function (error) {
           alert(error.message);
         });
+      }else{
+        alert('帳號或密碼不得為空')
+      }
+     
     },
     //google登入
     googleSignIn() {
-      // this.SET_LOGIN();
       const provider = new fireBase.auth.GoogleAuthProvider();
       fireBase
         .auth()
