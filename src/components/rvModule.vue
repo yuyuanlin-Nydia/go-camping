@@ -9,7 +9,8 @@
             <input
               type="text"
               placeholder="請輸入姓名 ex.王小名、張先生"
-              v-model="name"
+              v-model="name" v-on:keyup.right="fillUpForm"
+              v-on:keypress.enter="quickSet"
             />
           </div>
           <div>
@@ -34,24 +35,19 @@
               :max-date="new Date().setDate(new Date().getDate() + 30)"
               v-model="date"
             />
-            <!-- <select name="date" id="" v-model="date">
-              <option value="2021/07/13">2021/07/13</option>
-              <option value="2021/07/14">2021/07/14</option>
-              <option value="2021/07/15">2021/07/15</option>
-            </select> -->
           </div>
 
           <div>
             <label for="">時間:</label>
             <select name="time" id="" v-model="time">
-              <option value="1100">11:00</option>
-              <option value="1130">11:30</option>
-              <option value="1200">12:00</option>
-              <option value="1230">12:30</option>
-              <option value="1300">13:00</option>
-              <option value="1330">13:30</option>
-              <option value="1400">14:00</option>
-              <option value="1430">14:30</option>
+              <option value="11:00">11:00</option>
+              <option value="11:30">11:30</option>
+              <option value="12:00">12:00</option>
+              <option value="12:30">12:30</option>
+              <option value="13:00">13:00</option>
+              <option value="13:30">13:30</option>
+              <option value="14:00">14:00</option>
+              <option value="14:30">14:30</option>
             </select>
           </div>
         </form>
@@ -87,14 +83,22 @@ export default {
     };
   },
   methods: {
+    quickSet(){
+        this.name= "林小姐",
+        this.phoneNo= "0985123456"
+        // this.date=new Date(2022,2,28), //畫面未顯示，但實際有設定
+        this.time= "11:30",
+        this.adultNo= 2,
+        this.childNo= 2
+    },
     async uploadReservation() {
-      console.log(this.$store.state.user[0])
+      console.log(this.$store.state.user[0]);
       this.isLoading = true;
       const database = db.collection("reservation").doc();
-
+      
       await database.set({
         rvId: uid(6),
-        email:this.$store.state.user[0].eMail,
+        email: this.$store.state.user[0].eMail,
         name: this.name,
         phoneNo: this.phoneNo,
         adultNo: this.adultNo,
@@ -110,6 +114,13 @@ export default {
     },
     closeModule() {
       this.$emit("update", false);
+    },
+    fillUpForm() {
+      this.name="張小姐",
+      this.phoneNo="0988126789",
+      this.adultNo="4",
+      this.childNo="0",
+      this.time="1200"
     },
   },
 };

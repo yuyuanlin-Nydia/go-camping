@@ -5,7 +5,7 @@
         <template v-slot:title>帳篷預定</template>
       </Banner-top>
       <RoomFilter />
-      <div class="room" v-for="(item, idx) in occupancy" :key="idx">
+      <div class="room" v-for="(item, idx) in occupancy[0]" :key="idx">
         <div>
           <ul>
             <li>{{ item.tentName }}</li>
@@ -133,18 +133,20 @@ export default {
 
   mounted() {},
   activated() {
-    this.$store.state.occupancy.forEach((element) => {
-      for (var i = 0; i < element.offers.length; i++) {
-        var data = {};
-        data["tent"] = element.tentName;
-        data["offer"] = element.offers[i].offerName;
-        data["no"] = 1;
-        data["to"] = element.to;
-        data["from"] = element.from;
-        data["price"] = element.offers[i].lowestPrice;
-        this.selected.push(data);
-      }
-    });
+    if (this.$store.state.occupancy[0]) {
+      this.$store.state.occupancy[0].forEach((element) => {
+        for (var i = 0; i < element.offers.length; i++) {
+          var data = {};
+          data["tent"] = element.tentName;
+          data["offer"] = element.offers[i].offerName;
+          data["no"] = 1;
+          data["to"] = element.to;
+          data["from"] = element.from;
+          data["price"] = element.offers[i].lowestPrice;
+          this.selected.push(data);
+        }
+      });
+    }
   },
   created() {
     let _this = this;
@@ -153,7 +155,12 @@ export default {
         return state.occupancy;
       },
       function () {
-        _this.$store.state.occupancy.forEach((element) => {
+        const rawObject = JSON.parse(
+          JSON.stringify(_this.$store.state.occupancy[0])
+        );
+        console.log(rawObject);
+
+        rawObject.forEach((element) => {
           for (var i = 0; i < element.offers.length; i++) {
             var data = {};
             data["tent"] = element.tentName;
@@ -319,6 +326,4 @@ export default {
     }
   }
 }
-
-
 </style>

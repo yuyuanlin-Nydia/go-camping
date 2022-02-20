@@ -19,8 +19,8 @@
     </div>
   </div>
   <div class="right_nav">
-    <div @click="toggle_nav" class="bar_icon">
-      <img src="@/assets/icon/bars-solid.svg" alt="" />
+    <div @click="toggle_nav" class="bar_icon" :style="{'transform':(navToggle)? 'rotate(90deg)':'rotate(0deg)'}" >
+      <img src="@/assets/icon/bars-solid.svg" alt=""   />
     </div>
   </div>
   <transition name="nav">
@@ -62,6 +62,7 @@ export default {
   data() {
     return { data: {} };
   },
+  created() {},
   methods: {
     ...mapMutations(["TOGGLE_NAV", "SET_LOGIN"]),
     toggle_nav() {
@@ -114,6 +115,7 @@ export default {
     justify-content: center;
     padding: 10px;
     border-radius: 5px;
+    transition: all .5s;
     cursor: pointer;
     img {
       width: 28px;
@@ -122,7 +124,6 @@ export default {
   }
 }
 .top_nav {
-  
   .member_info {
     cursor: pointer;
     &:hover {

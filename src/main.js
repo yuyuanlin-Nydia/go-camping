@@ -4,7 +4,6 @@ import VueSplide from "@splidejs/vue-splide";
 import store from "./store";
 import router from "./assets/router/router.js";
 import VCalendar from "v-calendar";
-import { firebaseAuth } from "./firebase/firebaseInit";
 
 import "@/assets/scss/main.scss";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -18,18 +17,7 @@ import "@splidejs/splide/dist/css/themes/splide-sea-green.min.css";
 // or
 import "@splidejs/splide/dist/css/themes/splide-skyblue.min.css";
 
-firebaseAuth.onAuthStateChanged(function(user) {
-  if (user) {
-    // 使用者已登入，可以取得資料
-    var email = user.email;
-    var uid = user.uid;
-    console.log(email, uid);
-    // document.location.href="http://localhost:8080/"
-    // this.SET_LOGIN();
-  } else {
-    // 使用者未登入
-  }
-});
+
 const app = createApp(App);
 app.config.globalProperties.dateFormat = function(x) {
   var dateObject = new Date(x);

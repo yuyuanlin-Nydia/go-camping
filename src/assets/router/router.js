@@ -12,7 +12,7 @@ import TentBooking from "../../views/tentBooking.vue";
 import BookingOrders from "../../views/bookingOrders.vue";
 import Payment from "../../views/payment.vue";
 import MemberPage from "../../views/memberPage.vue";
-import { fireBase } from "../../firebase/firebaseInit";
+import { fireBase, firebaseAuth } from "../../firebase/firebaseInit";
 
 const routerHistory = createWebHistory();
 
@@ -24,9 +24,9 @@ const router = createRouter({
       name: "Home",
       component: Home,
       meta: {
-        title:"首頁",
+        title: "首頁",
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -35,7 +35,7 @@ const router = createRouter({
       component: Restaurant,
       meta: {
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -44,8 +44,8 @@ const router = createRouter({
       component: Reservations,
       meta: {
         keepAlive: false,
-        requiresAuth:true,
-        requiresAdmin:true
+        requiresAuth: true,
+        requiresAdmin: true,
       },
     },
     {
@@ -54,7 +54,7 @@ const router = createRouter({
       component: Tent,
       meta: {
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -63,7 +63,7 @@ const router = createRouter({
       component: TentIntro,
       meta: {
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -72,7 +72,7 @@ const router = createRouter({
       component: TentBooking,
       meta: {
         keepAlive: true, //判断是否缓存
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -81,7 +81,7 @@ const router = createRouter({
       component: Attraction,
       meta: {
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -90,7 +90,7 @@ const router = createRouter({
       component: Contactus,
       meta: {
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -99,7 +99,7 @@ const router = createRouter({
       component: SignIn,
       meta: {
         keepAlive: false,
-        requiresAuth:false
+        requiresAuth: false,
       },
     },
     {
@@ -108,7 +108,7 @@ const router = createRouter({
       component: BookingOrders,
       meta: {
         keepAlive: false,
-        requiresAuth:true
+        requiresAuth: true,
       },
     },
     {
@@ -117,7 +117,7 @@ const router = createRouter({
       component: Payment,
       meta: {
         keepAlive: false,
-        requiresAuth:true
+        requiresAuth: true,
       },
     },
     {
@@ -126,26 +126,26 @@ const router = createRouter({
       component: MemberPage,
       meta: {
         keepAlive: false,
-        requiresAuth:true
+        requiresAuth: true,
       },
     },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
-  let user = fireBase.auth().currentUser;
-  let admin = null;
-  if (user) {
-    let token = await user.getIdTokenResult();
-<<<<<<< HEAD
-    console.log(token);
-=======
->>>>>>> 040d761351a1ccc1ad06c82edc3d2b56e4924bba
-    admin = token.claims.admin;
-    console.log(admin);
-  }
-  if (to.matched.some((res) => res.meta.requiresAuth)) {
+  var currentUser = fireBase.auth().currentUser;
+  var admin = null;
+  firebaseAuth.onAuthStateChanged(function(user) {
     if (user) {
+      // 使用者已登入，可以取得資料
+      firebaseAuth.currentUser.getIdTokenResult().then((token) => {
+        admin = token.claims.user_id;
+      });
+    }
+  });
+
+  if (to.matched.some((res) => res.meta.requiresAuth)) {
+    if (currentUser) {
       if (to.matched.some((res) => res.meta.requiresAdmin)) {
         if (admin) {
           return next();

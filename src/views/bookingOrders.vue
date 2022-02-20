@@ -23,7 +23,6 @@
           </div>
           <div>
             <p class="info">
-              {{cart[idx].to}}
               入住日期： {{ dateFormat(cart[idx].to * 1000) }} <br />
               退房日期： {{ dateFormat(cart[idx].from * 1000) }}
             </p>
@@ -33,20 +32,20 @@
           </button>
         </div>
       </div>
-      {{ cart }}
+     
       <div class="bottom">
         <router-link :to="{ name: 'TentBooking' }">
           <button class="btn_green1">訂購更多房間</button>
         </router-link>
         <span
           >訂房總額
-          <div class="total">{{ total.toLocaleString() }}</div>
+          <div class="total">{{ (cart.total * 1).toLocaleString() }}</div>
           TWD</span
         >
         <span
-          >應付訂金
+          >應付訂金(30%)
           <div class="total">
-            {{ (total * 0.3).toLocaleString() }}
+            {{ (cart.total * 0.3).toLocaleString() }}
           </div>
           TWD</span
         >
@@ -82,20 +81,31 @@ export default {
   components: {
     Banner,
   },
-  mounted() {},
+  mounted() {
+    this.calTot()
+  },
   methods: {
     deleteItem(item) {
       this.$store.commit("DELETE_CART_ITEM", item);
     },
-  },
-  computed: {
-    ...mapState(["cart", "occupancy"]),
-    total() {
+    calTot(){
       var tot = 0;
       this.cart.forEach((element) => {
         tot += element.price * element.no;
       });
-      return tot;
+      this.cart.total=tot
+    }
+  },
+  computed: {
+    ...mapState(["cart", "occupancy"]),
+    total() {
+      var aaa = 0;
+      // this.cart.forEach((element) => {
+      //   tot += element.price * element.no;
+      // });
+      // console.log(this.cart)
+      // // this.cart.total=tot
+      return aaa;
     },
   },
 };

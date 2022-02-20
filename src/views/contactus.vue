@@ -1,9 +1,11 @@
 <template>
   <Banner-top>
     <template v-slot:title>聯絡我們</template>
+    
   </Banner-top>
   <div class="content main">
     <h5>若您有任何疑問、或問題反饋，歡迎您透過以下方式聯絡我們!謝謝您的蒞臨</h5>
+    
     <div class="wrapper">
       <div>
         <table class="m_table">
@@ -38,7 +40,9 @@
             </td>
           </tr>
         </table>
-        <button class="btn_brown2" @click="sendEmail">發送</button>
+        <button class="btn_brown2" @click="sendEmail">發送
+          <img src="../assets/img/loading.gif" alt="" v-if="isLoading">
+        </button>
       </div>
 
       <div>
@@ -88,7 +92,7 @@
 
 <script>
 import BannerTop from "../components/bannerTop.vue";
-// import emailjs from 'emailjs-com';
+import emailjs from "emailjs-com";
 export default {
   components: {
     BannerTop,
@@ -100,45 +104,38 @@ export default {
       tele: null,
       email: null,
       content: null,
+      isLoading: null,
     };
   },
   methods: {
     sendEmail() {
-  //     let templateParams = {
-  //     "userMail": "sandy6513ab@gmail.com",
-  //     "user": "Lai",
-  //     "img": "<img src='https://blog.devdon.com/wp-content/uploads/2018/05/good-ideas-logo.png'></img>"
-  //   }
-
-  //   let service_id = "default_service";
-  //   let template_id = "template_qfit1he";
-  //   let userID = "user_RtSc5vIZxc8QmHcvyu6yT"
-  //   emailjs.send(service_id, template_id, templateParams,userID)
-  //     .then((response) => {
-  //       console.log('SUCCESS!', response.status, response.text);
-  //     })
-  //     .catch((error) => {
-  //       console.log('FAILED...', error);
-  //     })
-  // }
-      window.Email.send({
-<<<<<<< HEAD
-        SecureToken: "20acc933-aa21-4b75-ba54-c2a1226dd323",
-=======
-        SecureToken: "0ac6a621-acf6-426d-be04-d0826e30af24",
-        // Host: "smtp.elasticemail.com",
-        // Username: "sandy6513ab",
-        // Password: "Thanks613",
->>>>>>> 040d761351a1ccc1ad06c82edc3d2b56e4924bba
-        To: "sandy6513ab@gmail.com",
-        From: "yuyuanlin613@gmial.com",
-        Subject: "Sending Email using javascript with SMTPJS",
-        Body: `<p style="font-size:18px"><b>姓名</b>:${this.name}<br><br>
-        <b>電話</b>:${this.tele} <br><br>
-        <b>內文</b>:${this.content}</p>`,
-      }).then((message) => alert(message));
+      this.isLoading = true;
+      let templateParams = {
+        userMail: this.email,
+        user: this.name,
+        tele: this.tele,
+        subject: this.subject,
+        content: this.content,
+      };
+      let service_id = "default_service";
+      let template_id = "template_qfit1he";
+      let userID = "user_RtSc5vIZxc8QmHcvyu6yT";
+      emailjs
+        .send(service_id, template_id, templateParams, userID)
+        .then((response) => {
+          alert("SUCCESS!", response.status, response.text);
+          this.isLoading = null;
+          this.email = null;
+          this.name = null;
+          this.tele = null;
+          this.subject = null;
+          this.content = null;
+        })
+        .catch((error) => {
+          alert("FAILED...", error);
+        });
+      
     },
-    
   },
 };
 </script>

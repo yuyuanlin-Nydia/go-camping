@@ -15,6 +15,7 @@ import Nav from "./components/nav.vue";
 import MyFooter from "./components/footer.vue";
 import { mapMutations, mapState } from "vuex";
 
+
 export default {
   name: "App",
   data() {
@@ -25,10 +26,10 @@ export default {
     MyFooter,
   },
   created() {
-    console.log(this.$store.state.logIn);
   },
   methods: {
     ...mapMutations(["TOGGLE_NAV"]),
+   
   },
 
   computed: {

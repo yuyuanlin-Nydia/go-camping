@@ -62,8 +62,8 @@
             或是，與家人和朋友們嬉戲玩樂，<br />
             一起放肆大笑，共度美好的早晨、下午與夜晚。
           </p>
-
-          <button class="btn_brown2">MORE</button>
+          <router-link :to="{name:'Tent'}"><button class="btn_brown2">MORE</button></router-link>
+          
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
             地 址:545南投縣埔里鎮桃米路12-11號<br />
             公 休:禮拜一<br />
           </p>
-          <p><button class="btn_brown2">MORE</button></p>
+          <router-link :to="{name:'Restaurant'}"><p><button class="btn_brown2">MORE</button></p></router-link>
         </div>
       </div>
       <!-- 餐廳食物圖片slide -->

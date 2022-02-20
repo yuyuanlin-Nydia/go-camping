@@ -6,7 +6,7 @@
   <div class="myContainer main">
     <div class="restaurant_div">
       <button class="btn_green1" @click="rvBooking">線上訂位</button>
-      <button class="btn_green1">預約外帶</button>
+        <!-- <button class="btn_green1">預約外帶</button> -->
       <div class="menu">
         <h2 class="text-center">菜單</h2>
         <div class="d-flex">
@@ -180,7 +180,12 @@ export default {
     },
     // 線上訂位
     rvBooking() {
-      this.isBooking = true;
+      if(this.$store.state.user[0]){
+        this.isBooking = true;
+      }else{
+        alert("請先登入才能進行線上訂位喔!")
+        this.$router.push({name:'SignIn'})
+      }
     },
     selfUpdate(val) {
       this.isBooking = val;

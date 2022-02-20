@@ -27,7 +27,7 @@
         </div>
         <div class="resRev" v-if="nowTab == 'restaurant'">
             <h5><b>餐廳訂位紀錄</b></h5>
-          <div  v-if="resBooking.length > 0">
+          <div v-if="resBooking.length > 0">
             <div
               v-for="(order, idx) in resBooking"
               :key="order.rvId"
@@ -48,14 +48,12 @@
                 <div v-if="updateIdx !== order.id || updateIdx == null">
                   <b>用餐時間</b> : {{ dateFormat(order.date.seconds * 1000) }}
                   {{
-                    order.time.substring(0, 2) +
-                    ":" +
-                    order.time.substring(2, 4)
+                    (order.time)
                   }}
                 </div>
                 <div v-if="updateIdx == order.id">
                   <b>用餐時間</b> :
-                  <v-date-picker
+                  <v-date-picker style="display:inline-block"
                     v-model="originalDate"
                     :masks="masks"
                     :input-debounce="500"
@@ -72,49 +70,49 @@
                   <select name="time" id="" v-model="resBooking[idx].time">
                     <option
                       :selected="resBooking[idx].time == '1100'"
-                      value="1100"
+                      value="11:00"
                     >
                       11:00
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1130'"
-                      value="1130"
+                      value="11:30"
                     >
                       11:30
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1200'"
-                      value="1200"
+                      value="12:00"
                     >
                       12:00
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1230'"
-                      value="1230"
+                      value="12:30"
                     >
                       12:30
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1330'"
-                      value="1300"
+                      value="13:00"
                     >
                       13:00
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1330'"
-                      value="1330"
+                      value="13:30"
                     >
                       13:30
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1400'"
-                      value="1400"
+                      value="14:00"
                     >
                       14:00
                     </option>
                     <option
                       :selected="resBooking[idx].time == '1430'"
-                      value="1430"
+                      value="14:30"
                     >
                       14:30
                     </option>
@@ -186,14 +184,15 @@
               </div>
             </div>
           </div>
-          <div v-if="resBooking.length == 0">
+          <div v-else>
             <p>目前您沒有餐廳訂位紀錄唷!</p>
           </div>
         </div>
         <div class="tentRev" v-if="nowTab == 'tent'">
           <h5><b>帳篷訂房紀錄</b></h5>
+          <p>*帳篷紀錄僅供取消與查詢，若欲更改，請來電(04)9291-2677確認訂房狀況。</p>
           <div>
-            <div v-if="tentBooking.length == 0">
+            <div v-if="tentBooking.length > 0">
               <div  
                 v-for="(eachBooking, idx) in tentBooking"
                 :key="idx"
@@ -209,26 +208,30 @@
                       : '1',
                 }"
               >
-                <div style="flex: 1">
-                  <p
-                    v-if="
+                <div style="flex: 1" class="offer_top">
+                  <div>
+                    <b>訂房狀態</b> : 
+                    <span v-if="
                       eachBooking.status == 'booked' &&
                       !pastDays(eachBooking.tentInfo[0].to)
-                    "
-                  >
-                    <b>訂位狀態</b> : 已訂房
-                  </p>
-                  <p
-                    v-if="
+                    ">已訂房</span> 
+                    <span v-if="
                       eachBooking.status == 'booked' &&
                       pastDays(eachBooking.tentInfo[0].to)
-                    "
-                  >
-                    <b>訂位狀態</b> : 已入住
-                  </p>
-                  <p v-if="eachBooking.status == 'canceled'">
-                    <b>訂位狀態</b> : 已取消
-                  </p>
+                    ">已入住</span> 
+                    <span v-if="eachBooking.status == 'canceled'">已取消</span> 
+                    <br>
+                    <b>訂單編號</b> : {{eachBooking.rvId}}
+                  </div>
+                  <div
+                      class="change_btns"
+                      v-if="eachBooking.status == 'booked' &&
+                      !pastDays(eachBooking.tentInfo[0].to)"
+                    >
+                      <button class="btn_brown1" @click="cxlTentRev">取消帳篷</button>
+                  </div>
+                </div> 
+                <div>
                   <div
                     v-bind:class="{
                       booked_info: eachBooking.status == 'booked',
@@ -253,18 +256,12 @@
                       <b>間數</b> : {{ item.no }} 間<br />
                     </div>
   
-                    <div
-                      class="change_btns"
-                      v-if="eachBooking.status == 'booked'"
-                    >
-                      <button class="btn_brown1">取消帳篷</button>
-                      <button class="btn_brown1">更改訂房</button>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="tentBooking.length == 0">
+            <div v-else>
               <p>目前您沒有帳篷訂房紀錄唷!</p>
             </div>
           </div>
@@ -335,6 +332,7 @@ export default {
       result.forEach((doc) => {
         var data = {
           id: doc.id,
+          rvId: doc.data().rvId,
           status: doc.data().status,
           tentInfo: doc.data().tentInfo,
         };
@@ -366,7 +364,6 @@ export default {
         adultNo: parseInt(this.resBooking[idx].adultNo),
         childNo: parseInt(this.resBooking[idx].childNo),
       });
-      console.log(this.resBooking[idx].date.seconds);
       alert("您已成功更改訂位");
       this.getRev();
       this.updateIdx = null;
@@ -377,6 +374,14 @@ export default {
     pastDays(date) {
       var status = new Date(date * 1000) < new Date() ? true : false;
       return status;
+    },
+    cxlTentRev(id) {
+      var dataBase = db.collection("tentRev").doc(id);
+      dataBase.update({
+        status: "canceled",
+      });
+      alert("您已成功取消訂房");
+      this.getTentRev();
     },
   },
 };
@@ -395,57 +400,71 @@ export default {
     }
   }
 }
-.resRev,
-.tentRev {
+.tentRev,
+.resRev {
   h5 {
     margin-bottom: 2%;
   }
-  .perBooking {
+  p {
+    font-size: 16px;
+    flex: 1;
+  }
+  .change_btns {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    button {
+      margin: 4% 0;
+    }
+  }
+  .perBooking {
     align-items: center;
     padding: 1.5%;
     border-radius: 20px;
     border: 2px solid $color2;
     margin-bottom: 2%;
-    p {
-      font-size: 16px;
-      flex: 1;
-    }
-    .change_btns {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 30%;
-      button {
-        margin: 4%;
-      }
-      .btn_green1,
-      .btn_green2,
-      .btn_brown1,
-      .btn_brown1 {
-        border-radius: 0;
-        padding: 3% 10%;
-      }
-    }
   }
   .canceled {
     border: 2px solid grey;
     background-color: lightgrey;
   }
+  .btn_green1,
+  .btn_green2,
+  .btn_brown1,
+  .btn_brown1 {
+    border-radius: 0;
+    padding: 3% 10%;
+  }
+}
+.resRev {
+  .perBooking {
+	display: flex;
+  }
+}
+.tentRev {
+  .offer_top {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+input[type="text"],
+select {
+  margin: 0.5% 1%;
+  padding: 2px 5px;
 }
 .tentRev {
   .perBooking {
     border: 2px solid $color1;
     .booked_info {
-      display: flex;
-      background-color: $color1;
       width: 100%;
     }
     .single_offer {
       padding: 1%;
       width: 70%;
+      background-color: $color1;
     }
     .single_offer_canceled {
       background-color: grey;

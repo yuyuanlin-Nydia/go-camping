@@ -102,7 +102,6 @@
       </div>
       <div class="orders_data">
         <h4>訂房明細</h4>
-        {{ cart }}
         <section>
           <article v-for="(item, idx) in cart" :key="idx">
             <ul class="arter">
@@ -110,7 +109,7 @@
                 <span>入住日期<i></i></span>: {{ dateFormat(item.from * 1000) }}
               </li>
               <li>
-                <span>退房日期<i></i></span>: {{ dateFormat(item.to * 1000) }}
+                <span>退房日期<i></i></span>: {{ dateFormat(item.to * 1000) }}(共{{Math.round((item.to-item.from)/86400)}}晚)
               </li>
               <li>
                 <span>房間數量<i></i></span>: {{ item.no }} 間
@@ -125,20 +124,28 @@
                 <span>價格/晚<i></i></span>:
                 {{ item.price.toLocaleString() }}TWD
               </li>
-              <li>
-                <span>3晚<i></i></span>: 2021年9月21日 ${{
+              <!-- <li>
+                 2021年9月21日 ${{
                   item.price.toLocaleString()
                 }}<br />
                 <p style="padding-left: 72px">
                   2021年9月22日 ${{ item.price.toLocaleString() }}<br />
                   2021年9月23日 ${{ item.price.toLocaleString() }}<br />
                 </p>
-              </li>
-              <li>
-                <span style="font-size: 18px">總金額<i></i></span>:TWD 7290
+              </li> -->
+              
+              <li >
+                <span style="font-size: 18px">金額<i></i></span>:TWD {{(Math.round((item.to-item.from)/86400)*item.price).toLocaleString()}}
               </li>
             </ul>
+            <div>-----------------------------------------</div>
           </article>
+          <pre style="font-size:1.2rem;font-weight:900">
+房    費:{{cart.total.toLocaleString()}}
+刷卡金額:{{(cart.total*0.3).toLocaleString()}}
+            
+          </pre>
+          
         </section>
       </div>
     </div>
@@ -151,7 +158,7 @@ import Banner from "../components/bannerTop.vue";
 import Loading from "../components/loading.vue";
 import { db } from "../firebase/firebaseInit";
 import { uid } from "uid";
-import {  mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
   components: { Banner, Loading },
   data() {
@@ -162,7 +169,7 @@ export default {
           firstName: null,
           lastName: null,
         },
-        id:null,
+        id: null,
         birth: null,
         phone: null,
         tele: {
@@ -178,60 +185,62 @@ export default {
           c_card4: null,
         },
       },
-      isLoading:false
+      isLoading: false,
     };
   },
-  mounted(){
-    console.log(this.$store.state.cart)
+  mounted() {
   },
   methods: {
-    quickSet(){
-        this.customer.email= "sandy6513ab@gmail.com",
-        this.customer.name.firstName= "林",
-        this.customer.name.lastName= "芋圓"
-        this.customer.id="L265656565",
-        this.customer.birth= "1994-06-01",
-        this.customer.phone= "0958868526",
-        this.customer.tele.tele1= "04",
-        this.customer.tele.tele2= "255689252",
-        this.customer.county= "台中市",
-        this.customer.town= "豐原區",
-        this.customer.address= "豐東路58號",
-        this.customer.c_card.c_card1= "5520",
-        this.customer.c_card.c_card2= "0000",
-        this.customer.c_card.c_card3= "5599",
-        this.customer.c_card.c_card4= "6682"
+    quickSet() {
+      (this.customer.email = "sandy6513ab@gmail.com"),
+        (this.customer.name.firstName = "林"),
+        (this.customer.name.lastName = "芋圓");
+      (this.customer.id = "L265656565"),
+        (this.customer.birth = "1994-06-01"),
+        (this.customer.phone = "0958868526"),
+        (this.customer.tele.tele1 = "04"),
+        (this.customer.tele.tele2 = "255689252"),
+        (this.customer.county = "台中市"),
+        (this.customer.town = "豐原區"),
+        (this.customer.address = "豐東路58號"),
+        (this.customer.c_card.c_card1 = "5520"),
+        (this.customer.c_card.c_card2 = "0000"),
+        (this.customer.c_card.c_card3 = "5599"),
+        (this.customer.c_card.c_card4 = "6682");
     },
     async cfmTent() {
-      console.log(this.$store.state.cart) 
-      this.isLoading=true;
-      const database=db.collection('tentRev').doc();
-      var cus=this.customer
+      this.isLoading = true;
+      const database = db.collection("tentRev").doc();
+      var cus = this.customer;
       await database.set({
         rvId: uid(6),
-        email:cus.email,
-        lastName:cus.name.lastName,
-        firstName:cus.name.firstName,
-        id:cus.id,
-        birth:cus.birth,
-        phone:cus.phone,
-        tele1:cus.tele.tele1,
-        tele2:cus.tele.tele2,
-        county:cus.county,
-        town:cus.town,
-        address:cus.address,
-        c_card:cus.c_card.c_card1+cus.c_card.c_card2+cus.c_card.c_card3+cus.c_card.c_card4,
-        tentInfo:this.$store.state.cart,
-        status:"booked"
-      })
+        email: cus.email,
+        lastName: cus.name.lastName,
+        firstName: cus.name.firstName,
+        id: cus.id,
+        birth: cus.birth,
+        phone: cus.phone,
+        tele1: cus.tele.tele1,
+        tele2: cus.tele.tele2,
+        county: cus.county,
+        town: cus.town,
+        address: cus.address,
+        c_card:
+          cus.c_card.c_card1 +
+          cus.c_card.c_card2 +
+          cus.c_card.c_card3 +
+          cus.c_card.c_card4,
+        tentInfo: this.$store.state.cart,
+        status: "booked",
+      });
 
-      this.isLoading=false;
-       alert("您已成功預約帳篷!感謝您的預定");
-       this.$router.push({name:"Home"});
-       this.$store.commit("DELETE_ALLCART")
+      this.isLoading = false;
+      alert("您已成功預約帳篷!感謝您的預定");
+      this.$router.push({ name: "Home" });
+      this.$store.commit("DELETE_ALLCART");
     },
     cxlTent() {
-      this.$store.commit("DELETE_ALLCART")
+      this.$store.commit("DELETE_ALLCART");
       this.$router.push({
         name: "Home",
       });

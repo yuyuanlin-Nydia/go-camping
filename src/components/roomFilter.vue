@@ -9,7 +9,7 @@
           align-items: start;
         "
       >
-        <p>選擇客房</p>
+        <p>選擇房型</p>
         <p v-if="checkedItem.length">{{ checkedItem.toString() }}</p>
       </div>
       <div>
@@ -159,7 +159,7 @@
         >{{ endDate.toLocaleDateString() }} </span
       ><br />
       <span class="question">搜尋結果</span>:<span class="answer"
-        >共{{ occupancy.length }}種房型</span
+        >共{{ occupancy[0].length }}種房型</span
       >
     </div>
   </div>

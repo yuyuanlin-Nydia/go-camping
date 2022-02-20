@@ -68,10 +68,11 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$store.state.logIn);
   },
+  
   methods: {
     ...mapMutations(["SET_LOGIN"]),
+    
     // 註冊
     register() {
       this.isLoading = true;
@@ -86,35 +87,37 @@ export default {
           alert(error.message);
         });
       this.isLoading = false;
-      this.currentTab="登入";
-      this.email='';
-      this.password=''
+      this.currentTab = "登入";
+      this.email = "";
+      this.password = "";
     },
     // 一般登入
     signIn() {
       var email = this.logEmail;
       var password = this.logPassword;
-      if(email && password){
-           firebaseAuth
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          alert("成功登入");
-          var userData = {
-            userName: this.logEmail.split("@")[0],
-            eMail: this.logEmail,
-          };
-          this.SET_LOGIN(userData);
-          this.$router.push("/");
-        }, err => {
-            alert(err.message)
-         })
-        .catch(function (error) {
-          alert(error.message);
-        });
-      }else{
-        alert('帳號或密碼不得為空')
+      if (email && password) {
+        firebaseAuth
+          .signInWithEmailAndPassword(email, password)
+          .then(
+            () => {
+              alert("成功登入");
+              var userData = {
+                userName: this.logEmail.split("@")[0],
+                eMail: this.logEmail,
+              };
+              this.SET_LOGIN(userData);
+              this.$router.push("/");
+            },
+            (err) => {
+              alert(err.message);
+            }
+          )
+          .catch(function (error) {
+            alert(error.message);
+          });
+      } else {
+        alert("帳號或密碼不得為空");
       }
-     
     },
     //google登入
     googleSignIn() {
@@ -123,8 +126,6 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then((result) => {
-          // var credential = result.credential;
-          // var token = credential.accessToken;
           var user = result.user;
           var userData = {
             userName: user.displayName,
@@ -133,7 +134,7 @@ export default {
           console.log(userData);
           this.SET_LOGIN(userData);
           this.$router.push({ name: "Home" });
-          this.$store.state.user;
+          // this.$store.state.user;
         })
         .catch((error) => {
           console.log(error.message);
@@ -142,30 +143,29 @@ export default {
     //FB登入
     fbSignIn() {
       const provider = new fireBase.auth.FacebookAuthProvider();
-      // let fbError = null;
-      // let fbCredential = null;
-      // let googleCred = null;
       fireBase
         .auth()
         .signInWithPopup(provider)
         .then((result) => {
-          // var credential = result.credential;
-          // var accessToken = credential.accessToken;
           var user = result.user;
-          this.SET_LOGIN();
-          console.log(user);
+          var userData = {
+            userName: user.displayName,
+            eMail: user.email,
+          };
+          console.log(userData);
+          this.SET_LOGIN(userData);
+          this.$router.push({ name: "Home" });
         })
         .catch((error) => {
-          // fbError = error.email;
-          console.log(error.email)
-          console.log(error.code)
+          console.log(error.email);
+          console.log(error.code);
           if (error.code === "auth/account-exists-with-different-credential") {
-            console.log(fireBase)
+            console.log(fireBase);
             fireBase
               .auth()
               .fetchSignInMethodsForEmail(error.email)
               .then(function (providers) {
-                console.log(providers)
+                console.log(providers);
                 // if (providers[0] == "google.com") {
                 //   var provider = new fireBase.auth.GoogleAuthProvider();
                 //   fireBase

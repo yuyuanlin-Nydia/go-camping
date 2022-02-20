@@ -50,19 +50,12 @@ https://eason920.medium.com/%E5%85%88%E6%9C%89%E6%9C%AC%E6%A9%9F%E8%B3%87%E5%A4%
 區分管理者和一般會員
 https://firebase.google.com/docs/auth/admin/custom-claims?hl=zh-cn
 
-<<<<<<< HEAD
 X SMTP會有問題:持續顯示Mailbox name not allowed. The server response was: Envelope FROM 'yuyuanlin613@gmail.com' email address not allowed.
 X 跟SMTP的伺服器有關 無關程式碼  所以改用emailJS
 X 信件寄信:https://www.smtpjs.com/
 X在index.html檔加入script CDN，在頁面使用記得用Email.send前面加上window.
 O https://www.emailjs.com/docs/examples/vuejs/
 O https://medium.com/unalai/%E5%89%8D%E7%AB%AF%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%B7%B1%E5%AF%84%E4%BF%A1%E5%97%8E-%E4%BE%86%E8%A9%A6%E8%A9%A6-formmule-emailjs-smtpjs-d3371bd9335d
-=======
-信件寄信:https://www.smtpjs.com/
-https://note.jackie.com.tw/index.php/2020/09/05/smtpjs-send-gmail/
-在index.html檔加入script CDN，在頁面使用記得用Email.send前面加上window.
-網頁上申請secureToken(domaim那格填) gmail.com
->>>>>>> 040d761351a1ccc1ad06c82edc3d2b56e4924bba
 
 VUE3在全域使用共同function(例如日期的轉換)
 https://v3.cn.vuejs.org/guide/migration/global-api.html#config-ignoredelements-%E6%9B%BF%E6%8D%A2%E4%B8%BA-config-iscustomelement
