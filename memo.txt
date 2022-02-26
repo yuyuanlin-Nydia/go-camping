@@ -72,6 +72,8 @@ https://www.itread01.com/p/649544.html
 上傳到githubPage，CSS和JS檔會抓到根目錄造成404:
 跟vue/router有關 https://learnvue.co/2020/09/how-to-deploy-your-vue-app-to-github-pages/#tip-handling-vue-router-with-a-custom-404-page
 複製一個index.html檔名改成404.html
+vue-router的Base屬性刪除&抓取不存在的路徑需用正規表達式
+https://router.vuejs.org/guide/migration/#moved-the-base-option
 
 網頁模板設計參考:
 首頁:

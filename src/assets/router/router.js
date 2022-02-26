@@ -14,11 +14,10 @@ import Payment from "../../views/payment.vue";
 import MemberPage from "../../views/memberPage.vue";
 import { fireBase, firebaseAuth } from "../../firebase/firebaseInit";
 
-const routerHistory = createWebHistory();
+const routerHistory = createWebHistory('goCamping');
 
 const router = createRouter({
   history: routerHistory,
-  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -130,10 +129,9 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
-    {
-    path:'*',
-    redirect: '/'
-    }
+    //不存在的路徑轉導到首頁
+    { path: '/:pathMatch(.*)*', name: 'Home', component: Home },
+   
   ],
 });
 
