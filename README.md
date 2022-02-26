@@ -8,7 +8,7 @@
 網站網址:https://yuyuanlin-nydia.github.io/goCamping/
 
 
-![Imgur](https://imgur.com/iK7VzX9)
+![Imgur](https://i.imgur.com/iK7VzX9.png)
 
 # 主要頁面:
 **-首頁**<br> 
@@ -28,10 +28,10 @@
 **-企業:**<br> 
 **查看餐廳預訂狀況**<br><br>
 
-![Imgur](https://imgur.com/IRcMiKG)
-![Imgur](https://imgur.com/m5hn4jR)
-![Imgur](https://imgur.com/mKBTWsL)
-![Imgur](https://imgur.com/1NT4GYw)
+![Imgur](https://i.imgur.com/IRcMiKG.png)
+![Imgur](https://i.imgur.com/m5hn4jR.png)
+![Imgur](https://i.imgur.com/mKBTWsL.png)
+![Imgur](https://i.imgur.com/1NT4GYw.png)
 
 ## 使用工具
 **前端:HTML/SCSS/JAVASCRIPT** <br> 
