@@ -18,7 +18,7 @@ const routerHistory = createWebHistory();
 
 const router = createRouter({
   history: routerHistory,
-  base: '/goCamping/'
+  base: '/goCamping/',
   routes: [
     {
       path: "/",

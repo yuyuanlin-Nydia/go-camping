@@ -13,7 +13,7 @@ module.exports = {
       key: fs.readFileSync(`${__dirname}/src/assets/https/localhost.com+1-key.pem`),
       cert: fs.readFileSync(`${__dirname}/src/assets/https/localhost.com+1.pem`)
     }
-  }
+  },
    publicPath: process.env.NODE_ENV === 'production'
   ? '/goCamping/'
   : '/goCamping/'
