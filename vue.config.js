@@ -5,7 +5,7 @@ module.exports = {
   },
   publicPath: process.env.NODE_ENV === 'production'
   ? '/goCamping/'
-  : '/'
+  : '/goCamping/'
 };
 // 為了使用mkcert
 const fs = require("fs");

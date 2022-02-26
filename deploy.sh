@@ -8,5 +8,5 @@ cd dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f https://github.com/yuyuanlin-nydia/go-camping.git master:gh-pages
+git push -f https://github.com/yuyuanlin-nydia/goCamping.git master:gh-pages
 cd -
