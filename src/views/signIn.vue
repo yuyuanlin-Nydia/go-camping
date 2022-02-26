@@ -14,7 +14,7 @@
         <!-- 登入欄位 -->
         <div v-if="currentTab === '登入'">
           <label for="">信箱:</label
-          ><input type="email" placeholder="請輸入信箱" v-model="logEmail"/><br />
+          ><input type="email" placeholder="請輸入信箱" v-model="logEmail" v-on:keypress.enter="quickSet2"/><br />
           <label for="">密碼:</label
           ><input type="password" placeholder="請輸入密碼" v-model="logPassword"/>
           <button class="btn_brown2" @click="signIn">登入</button>
@@ -31,6 +31,7 @@
             placeholder="請輸入信箱"
             required
             v-model="email"
+            v-on:keypress.enter="quickSet"
           />
           <br />
           <label for="">密碼:</label
@@ -72,7 +73,14 @@ export default {
   
   methods: {
     ...mapMutations(["SET_LOGIN"]),
-    
+    quickSet2(){
+      this.logEmail="abcd123@yahoo.com.tw"
+      this.logPassword="sss22512"
+    },
+    quickSet(){
+      this.email="abcd123@yahoo.com.tw"
+      this.password="sss22512"
+    },
     // 註冊
     register() {
       this.isLoading = true;

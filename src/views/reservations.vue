@@ -77,10 +77,13 @@
           <th>電話</th>
           <th>大人人數</th>
           <th>小孩人數</th>
+          <th  v-if="status == 'all'" >訂位狀態</th>
           <th v-if="status !== 'canceled'"></th>
+          
         </tr>
 
-        <tr v-for="(data, idx) in filteredData[0]" :key="idx">
+        <tr v-for="(data, idx) in filteredData[0]" :key="idx"
+          :style="{'background-color':(new Date(data.date.seconds)>new Date()? '':'lightgrey')}">
           <td v-if="data.edit">
             <v-date-picker 
               v-model="data.date.seconds"
@@ -91,7 +94,6 @@
             >
               <template v-slot="{ inputValue, inputEvents }">
                 <input
-                  @input="console.log('aaa')"
                   class="bg-white border px-2 py-1 rounded"
                   :value="inputValue"
                   v-on="inputEvents"
@@ -102,38 +104,43 @@
           <td v-else>{{ data.date.seconds }}</td>
           <td v-if="data.edit">
             <select name="time" id="" v-model="data.time">
-              <option value="1100">11:00</option>
-              <option value="1130">11:30</option>
-              <option value="1200">12:00</option>
-              <option value="1230">12:30</option>
-              <option value="1300">13:00</option>
-              <option value="1330">13:30</option>
-              <option value="1400">14:00</option>
-              <option value="1430">14:30</option>
+              <option value="11:00">11:00</option>
+              <option value="11:30">11:30</option>
+              <option value="12:00">12:00</option>
+              <option value="12:30">12:30</option>
+              <option value="13:00">13:00</option>
+              <option value="13:30">13:30</option>
+              <option value="14:00">14:00</option>
+              <option value="14:30">14:30</option>
             </select>
           </td>
           <td v-else>
-            {{ data.time.substring(0, 2) + ":" + data.time.substring(2, 4) }}
+            {{ data.time.substring(0, 5)}}
           </td>
           <td v-if="data.edit"><input type="text" v-model="data.name" /></td>
           <td v-else>{{ data.name }}</td>
           <td v-if="data.edit"><input type="text" v-model="data.phoneNo" /></td>
           <td v-else>{{ data.phoneNo }}</td>
           <td v-if="data.edit">
-            <input type="number" v-model="data.adultNo" />
+            <input type="number" v-model="data.adultNo"  style="width:50%"/>
           </td>
           <td v-else>{{ data.adultNo }}</td>
           <td v-if="data.edit">
-            <input type="number" v-model="data.childNo" />
+            <input type="number" v-model="data.childNo" style="width:50%" />
           </td>
           <td v-else>{{ data.childNo }}</td>
 
-          <td v-if="!data.edit && status !== 'canceled'">
-            <button class="btn_green1" @click="data.edit = true">
+          
+          <td v-if='status=="all"'>{{ data.status }}</td>
+
+          <td v-if="!data.edit && status !== 'canceled' && new Date(data.date.seconds)>new Date()">
+            <button class="btn_green1" @click="data.edit = true" >
               更改訂位
             </button>
             <button class="btn_green1" @click="cancelRV(idx)">取消訂位</button>
           </td>
+          <td v-if="!data.edit && status !== 'canceled' && !(new Date(data.date.seconds)>new Date())">過往訂位</td>
+
           <td v-if="data.edit && status !== 'canceled'">
             <button class="btn_green1" @click="confirmChange(idx)">確認</button>
             <button class="btn_green1" @click="data.edit = false">
@@ -208,9 +215,9 @@ export default {
       this.totalAmount = totalAmount;
     },
     changeFunc(item, index) {
-      var d=this.filteredData[0][index].date.seconds.toString() ;
-      console.log(d)
-      console.lof(item)
+      var d = this.filteredData[0][index].date.seconds.toString();
+      console.log(d);
+      console.lof(item);
       // this.watchVal();
     },
     // 確認更改訂位
@@ -220,7 +227,7 @@ export default {
       const dataBase = db.collection("reservation").doc(data.docId);
       var d = data.date.seconds.toString();
       var rvDate = new Date(d.replace(/\//g, "-"));
-     
+      console.log(rvDate);
       dataBase.update({
         name: data.name,
         adultNo: parseInt(data.adultNo),
@@ -228,8 +235,9 @@ export default {
         time: data.time,
         phoneNo: data.phoneNo,
         date: rvDate,
+        status:data.status
       });
-      this.plus()
+      this.plus();
     },
     //刪除訂位
     cancelRV(idx) {

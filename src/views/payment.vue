@@ -188,25 +188,25 @@ export default {
       isLoading: false,
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     quickSet() {
-      (this.customer.email = "sandy6513ab@gmail.com"),
-        (this.customer.name.firstName = "林"),
-        (this.customer.name.lastName = "芋圓");
-      (this.customer.id = "L265656565"),
-        (this.customer.birth = "1994-06-01"),
-        (this.customer.phone = "0958868526"),
-        (this.customer.tele.tele1 = "04"),
-        (this.customer.tele.tele2 = "255689252"),
-        (this.customer.county = "台中市"),
-        (this.customer.town = "豐原區"),
-        (this.customer.address = "豐東路58號"),
-        (this.customer.c_card.c_card1 = "5520"),
-        (this.customer.c_card.c_card2 = "0000"),
-        (this.customer.c_card.c_card3 = "5599"),
-        (this.customer.c_card.c_card4 = "6682");
+      console.log(this.$store.state.user[0]);
+      this.customer.email = this.$store.state.user[0].eMail;
+      this.customer.name.firstName = "林";
+      this.customer.name.lastName = "芋圓";
+      this.customer.id = "L265656565";
+      this.customer.birth = "1994-06-01";
+      this.customer.phone = "0958868526";
+      this.customer.tele.tele1 = "04";
+      this.customer.tele.tele2 = "255689252";
+      this.customer.county = "台中市";
+      this.customer.town = "豐原區";
+      this.customer.address = "豐東路58號";
+      this.customer.c_card.c_card1 = "5520";
+      this.customer.c_card.c_card2 = "0000";
+      this.customer.c_card.c_card3 = "5599";
+      this.customer.c_card.c_card4 = "6682";
     },
     async cfmTent() {
       this.isLoading = true;

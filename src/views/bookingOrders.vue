@@ -23,8 +23,8 @@
           </div>
           <div>
             <p class="info">
-              入住日期： {{ dateFormat(cart[idx].to * 1000) }} <br />
-              退房日期： {{ dateFormat(cart[idx].from * 1000) }}
+              入住日期： {{ dateFormat(cart[idx].from * 1000) }} <br />
+              退房日期： {{ dateFormat(cart[idx].to * 1000) }}
             </p>
           </div>
           <button class="btn_brown1 cancle" @click="deleteItem(item)">

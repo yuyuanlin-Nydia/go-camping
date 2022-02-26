@@ -18,6 +18,7 @@ const routerHistory = createWebHistory();
 
 const router = createRouter({
   history: routerHistory,
+  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -44,7 +45,7 @@ const router = createRouter({
       component: Reservations,
       meta: {
         keepAlive: false,
-        requiresAuth: true,
+        // requiresAuth: true,
         requiresAdmin: true,
       },
     },
@@ -129,6 +130,10 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+    path:'*',
+    redirect: '/'
+    }
   ],
 });
 

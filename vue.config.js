@@ -3,6 +3,7 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
   },
+ 
 };
 // 為了使用mkcert
 const fs = require("fs");
@@ -16,4 +17,5 @@ module.exports = {
    publicPath: process.env.NODE_ENV === 'production'
     ? '/goCamping/'
     : '/'
+
 };
