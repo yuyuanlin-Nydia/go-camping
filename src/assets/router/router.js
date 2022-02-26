@@ -18,7 +18,7 @@ const routerHistory = createWebHistory();
 
 const router = createRouter({
   history: routerHistory,
-  base: '/goCamping/',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -130,6 +130,10 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+    path:'*',
+    redirect: '/'
+    }
   ],
 });
 
