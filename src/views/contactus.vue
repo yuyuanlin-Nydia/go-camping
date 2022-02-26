@@ -12,7 +12,8 @@
           <tr>
             <td>主旨</td>
             <td>
-              <input type="text" placeholder="請填寫主旨" v-model="subject" />
+              <input type="text" placeholder="請填寫主旨" v-model="subject"
+                v-on:keypress.enter="quickSet" />
             </td>
           </tr>
           <tr>
@@ -108,6 +109,13 @@ export default {
     };
   },
   methods: {
+    quickSet() {
+      this.email = "sandy12345@yahoo.com.tw";
+      this.name = "張小姐";
+      this.tele = "0988-123456";
+      this.subject = "詢問訂房";
+      this.content = "想詢問這禮拜六是否可以預約帳篷呢?";
+    },
     sendEmail() {
       this.isLoading = true;
       let templateParams = {
@@ -123,7 +131,7 @@ export default {
       emailjs
         .send(service_id, template_id, templateParams, userID)
         .then((response) => {
-          alert("SUCCESS!", response.status, response.text);
+          alert("信件已寄出!", response.status, response.text);
           this.isLoading = null;
           this.email = null;
           this.name = null;
@@ -134,7 +142,6 @@ export default {
         .catch((error) => {
           alert("FAILED...", error);
         });
-      
     },
   },
 };

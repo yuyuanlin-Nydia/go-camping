@@ -92,7 +92,6 @@ export default {
         this.childNo= 2
     },
     async uploadReservation() {
-      console.log(this.$store.state.user[0]);
       this.isLoading = true;
       const database = db.collection("reservation").doc();
       

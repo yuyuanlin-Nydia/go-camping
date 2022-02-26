@@ -44,7 +44,7 @@ const router = createRouter({
       component: Reservations,
       meta: {
         keepAlive: false,
-        requiresAuth: true,
+        // requiresAuth: true,
         requiresAdmin: true,
       },
     },
